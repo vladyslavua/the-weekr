@@ -1,0 +1,77 @@
+@import '../../variables';
+
+.day-column-wrap {
+  //width: 33%;
+  //height: calc(100vh - #{$header-height});
+  //background: lightblue;
+  //display: inline-block;
+  order: 0;
+  flex: 1 1 auto;
+  align-self: stretch;
+  background: #f0f2f5;
+  border-left: 1px solid #e0e0e0;
+  flex-basis: 40px;
+}
+
+.day-column__header {
+  height: 53px;
+  background: grey;
+  line-height: 50px;
+  color: #fff;
+  text-align: center;
+}
+
+.day-column__section {
+  height: 35px;
+  border-bottom: 1px solid lightgray;
+  line-height: 35px;
+  text-align: center;
+  position: relative;
+  &.day-column__section--active {
+    &:hover {
+      .day-column__init-icon--minus {
+        display: inline-block;
+      }
+      .day-column__init-icon--plus {
+        display: none;
+      }
+    }
+  }
+  &:hover {
+    .day-column__init-icon--plus {
+      display: inline-block;
+    }
+  }
+}
+
+.day-column__init-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: lightgray;
+  display: none;
+  cursor: pointer;
+  &:hover {
+    color: dimgrey;
+  }
+}
+
+.day-column__section--active {
+  .day-column__radio {
+    display: inline-block;
+  }
+  .day-column__init-icon.day-column__init-icon--plus {
+    display: none;
+  }
+  .day-column__init-icon.day-column__init-icon--minus {
+    display: none;
+  }
+}
+
+.day-column__radio {
+  display: none;
+}
+
+.day-column__radio--active {
+  display: inline-block;
+}

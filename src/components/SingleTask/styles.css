@@ -1,0 +1,23 @@
+.single-task-list {
+  padding: 7px 15px;
+  background: #fff;
+  height: 35px; }
+  .single-task-list:hover {
+    background: #f3f3f3; }
+    .single-task-list:hover .single-task-list__delete-icon {
+      display: inline-block; }
+  .single-task-list .ant-checkbox-wrapper {
+    vertical-align: top; }
+
+.single-task-list__delete-icon {
+  display: none;
+  cursor: pointer;
+  float: right;
+  line-height: 22px; }
+
+.single-task-list__item-text {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 320px;
+  display: inline-block;
+  text-overflow: ellipsis; }

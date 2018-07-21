@@ -1,0 +1,24 @@
+.all-tasks-wrap {
+  order: 1;
+  flex: 0 1 300px;
+  align-self: stretch;
+  background: #fff; }
+  @media screen and (max-width: 920px) {
+    .all-tasks-wrap {
+      flex: 0 1 300px; } }
+  @media screen and (min-width: 921px) {
+    .all-tasks-wrap {
+      flex: 0 1 400px; } }
+
+.all-tasks__list {
+  list-style-type: none;
+  padding: 0; }
+  @media screen and (max-width: 920px) {
+    .all-tasks__list {
+      width: 300px; } }
+  @media screen and (min-width: 921px) {
+    .all-tasks__list {
+      width: 400px; } }
+
+.all-tasks__input-wrap {
+  padding: 10px; }

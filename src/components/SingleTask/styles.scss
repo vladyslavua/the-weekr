@@ -1,0 +1,36 @@
+@import '../../variables';
+
+.single-task-list {
+  padding: 7px 15px;
+  background: #fff;
+  height: 35px;
+  &:hover {
+    background: #f3f3f3;
+    .single-task-list__delete-icon {
+      display: inline-block;
+    }
+  }
+  .ant-checkbox-wrapper {
+    vertical-align: top;
+  }
+}
+
+.ant-checkbox {
+  //zoom: 1.3;
+  //transform: scale(1.2);
+}
+
+.single-task-list__delete-icon {
+  display: none;
+  cursor: pointer;
+  float: right;
+  line-height: 22px;
+}
+
+.single-task-list__item-text {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 320px;
+  display: inline-block;
+  text-overflow: ellipsis;
+}

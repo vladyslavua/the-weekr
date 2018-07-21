@@ -1,0 +1,30 @@
+@import '../../variables';
+
+.all-tasks-wrap {
+  order: 1;
+  flex: 0 1 300px;
+  align-self: stretch;
+  //background: #f0f2f5;
+  background: #fff;
+  @media screen and (max-width: 920px) {
+    flex: 0 1 300px;
+  }
+  @media screen and (min-width: 921px) {
+    flex: 0 1 400px;
+  }
+}
+
+.all-tasks__list {
+  list-style-type: none;
+  padding: 0;
+  @media screen and (max-width: 920px) {
+    width: 300px;
+  }
+  @media screen and (min-width: 921px) {
+    width: 400px;
+  }
+}
+
+.all-tasks__input-wrap {
+  padding: 10px;
+}

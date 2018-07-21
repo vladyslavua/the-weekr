@@ -1,0 +1,12 @@
+@import '../../variables';
+
+.header-wrap {
+  height: $header-height;
+  line-height: $header-height;
+  padding: 0 20px;
+  width: 100%;
+  background: #f9ce32bd;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}

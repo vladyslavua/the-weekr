@@ -1,0 +1,9 @@
+.header-wrap {
+  height: 64px;
+  line-height: 64px;
+  padding: 0 20px;
+  width: 100%;
+  background: #f9ce32bd;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600; }

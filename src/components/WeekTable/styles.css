@@ -1,0 +1,13 @@
+.week-table-wrap {
+  order: 2;
+  flex: 1 1 auto;
+  align-self: stretch;
+  background: green; }
+
+.week-table-wrap--flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start; }
