@@ -1,10 +1,13 @@
 @import '../../variables';
 
 .week-table-wrap {
-  order: 2;
-  flex: 1 1 auto;
-  align-self: stretch;
-  background: green;
+  //order: 2;
+  //flex: 1 1 560px;
+  //align-self: stretch;
+  width: $weektable-width;
+  display: inline-block;
+  height: 100vh;
+  background: grey;
 }
 
 .week-table-wrap--flex-container {
@@ -14,4 +17,22 @@
   justify-content: flex-start;
   align-content: stretch;
   align-items: flex-start;
+}
+
+.week-table__header {
+  order: 0;
+  flex: 1 1 auto;
+  align-self: auto;
+  height: 41px;
+  line-height: 41px;
+  text-align: center;
+  color: #fff;
+}
+
+.week-table__header__icon {
+  cursor: pointer;
+  color: lightgrey;
+  &:hover {
+    color: #fff;
+  }
 }

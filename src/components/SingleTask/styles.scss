@@ -1,13 +1,14 @@
 @import '../../variables';
 
 .single-task-list {
-  padding: 7px 15px;
+  //padding: 7px 15px;
+  width: inherit;
   background: #fff;
   height: 35px;
   &:hover {
     background: #f3f3f3;
-    .single-task-list__delete-icon {
-      display: inline-block;
+    .single-task-list__icon {
+      visibility: visible;
     }
   }
   .ant-checkbox-wrapper {
@@ -20,17 +21,74 @@
   //transform: scale(1.2);
 }
 
-.single-task-list__delete-icon {
-  display: none;
+.single-task-list__icon {
+  visibility: hidden;
   cursor: pointer;
-  float: right;
   line-height: 22px;
+  color: lightgray;
+  &:hover {
+    color: grey;
+  }
+}
+
+.single-task-list__icon-wrap {
+  float: right;
 }
 
 .single-task-list__item-text {
   overflow: hidden;
   white-space: nowrap;
-  width: 320px;
   display: inline-block;
   text-overflow: ellipsis;
+  cursor: pointer;
+  width: calc(100% - 60px);
+  //margin-bottom: 10px;
+}
+
+.single-task-list__item-edit {
+  width: 320px;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.single-task-list--active {
+  position: relative;
+  .single-task-list__wrap {
+    background: #f3f3f3;
+    height: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+  }
+  .single-task-list__item-text {
+    overflow: inherit;
+    white-space: normal;
+  }
+  .single-task-list__extras {
+    display: block;
+  }
+  .single-task-list__icon {
+    color: grey;
+    visibility: visible;
+  }
+}
+
+.single-task-list__wrap {
+  padding: 7px 15px;
+}
+
+.single-task-list__extras {
+  display: none;
+  text-align: left;
+  padding: 10px 0;
+  margin-left: 20px;
+  margin-right: 25px;
+  button {
+    margin-left: 5px;
+  }
+}
+
+.single-task-list__icon--delete {
+  margin-right: 5px;
 }

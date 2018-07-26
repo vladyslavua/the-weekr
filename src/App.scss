@@ -40,3 +40,14 @@
   align-content: stretch;
   align-items: flex-start;
 }
+
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0!important;
+}

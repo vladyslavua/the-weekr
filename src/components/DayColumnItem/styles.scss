@@ -1,26 +1,5 @@
 @import '../../variables';
 
-.day-column-wrap {
-  //width: 33%;
-  height: calc(100vh - #{$header-height});
-  //background: lightblue;
-  //display: inline-block;
-  order: 0;
-  flex: 1 1 auto;
-  align-self: stretch;
-  background: #f0f2f5;
-  border-right: 1px solid #e0e0e0;
-  flex-basis: 40px;
-}
-
-.day-column__header {
-  height: 52px;
-  background: #fff;
-  line-height: 52px;
-  text-align: center;
-  border-bottom: 1px solid lightgray;
-}
-
 .day-column__section {
   height: 35px;
   border-bottom: 1px solid lightgray;
@@ -74,10 +53,4 @@
 
 .day-column__radio--active {
   display: inline-block;
-}
-
-.day-column__header--active {
-  font-weight: 700;
-  color: gray;
-  //text-decoration: underline;
 }

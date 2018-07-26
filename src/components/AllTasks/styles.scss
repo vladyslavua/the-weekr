@@ -1,30 +1,93 @@
 @import '../../variables';
 
 .all-tasks-wrap {
-  order: 1;
-  flex: 0 1 300px;
-  align-self: stretch;
-  //background: #f0f2f5;
+  //order: 1;
+  //flex: 1 1 auto;
+  //align-self: stretch;
+  width: calc(100% - #{$weektable-width});
+  height: 100vh;
+  display: inline-block;
   background: #fff;
-  @media screen and (max-width: 920px) {
-    flex: 0 1 300px;
-  }
-  @media screen and (min-width: 921px) {
-    flex: 0 1 400px;
-  }
+  border-right: 1px solid #e0e0e0;
+  //@media screen and (max-width: 920px) {
+  //  flex: 0 1 300px;
+  //}
+  //@media screen and (min-width: 921px) {
+  //  flex: 0 1 400px;
+  //}
 }
 
 .all-tasks__list {
   list-style-type: none;
   padding: 0;
-  @media screen and (max-width: 920px) {
-    width: 300px;
-  }
-  @media screen and (min-width: 921px) {
-    width: 400px;
-  }
+  margin-bottom: 0;
+  margin-top: 10px;
+  //@media screen and (max-width: 920px) {
+  //  width: 300px;
+  //}
+  //@media screen and (min-width: 921px) {
+  //  width: 400px;
+  //}
 }
 
 .all-tasks__input-wrap {
-  padding: 10px;
+  padding: 0 10px;
+  .ant-input-group-addon {
+    &:hover {
+      background: #fff;
+    }
+  }
+}
+
+.all-tasks__add-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6d6969;
+  padding: 0px;
+}
+
+.all-tasks__header {
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+}
+
+.all-tasks__archived-header {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    h3 {
+      color: grey;
+    }
+  }
+  h3 {
+    color: lightgrey;
+  }
+}
+
+.all-tasks__list--archived {
+  display: none;
+}
+
+.all-tasks__list--active {
+  display: inline-block;
+}
+
+.all-tasks__archived-header--active {
+  h3 {
+    color: grey;
+  }
+  .all-tasks__archived-header__icon {
+    transform: rotate(180deg);
+    //transition: all 0.1s;
+  }
+}
+
+.all-tasks__empty {
+  text-align: center;
+  color: lightgrey;
+  font-weight: 300;
 }

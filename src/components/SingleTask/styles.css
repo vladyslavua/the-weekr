@@ -1,23 +1,67 @@
 .single-task-list {
-  padding: 7px 15px;
+  width: inherit;
   background: #fff;
   height: 35px; }
   .single-task-list:hover {
     background: #f3f3f3; }
-    .single-task-list:hover .single-task-list__delete-icon {
-      display: inline-block; }
+    .single-task-list:hover .single-task-list__icon {
+      visibility: visible; }
   .single-task-list .ant-checkbox-wrapper {
     vertical-align: top; }
 
-.single-task-list__delete-icon {
-  display: none;
+.single-task-list__icon {
+  visibility: hidden;
   cursor: pointer;
-  float: right;
-  line-height: 22px; }
+  line-height: 22px;
+  color: lightgray; }
+  .single-task-list__icon:hover {
+    color: grey; }
+
+.single-task-list__icon-wrap {
+  float: right; }
 
 .single-task-list__item-text {
   overflow: hidden;
   white-space: nowrap;
+  display: inline-block;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  width: calc(100% - 60px); }
+
+.single-task-list__item-edit {
   width: 320px;
   display: inline-block;
-  text-overflow: ellipsis; }
+  margin-left: 10px; }
+
+.single-task-list--active {
+  position: relative; }
+  .single-task-list--active .single-task-list__wrap {
+    background: #f3f3f3;
+    height: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1); }
+  .single-task-list--active .single-task-list__item-text {
+    overflow: inherit;
+    white-space: normal; }
+  .single-task-list--active .single-task-list__extras {
+    display: block; }
+  .single-task-list--active .single-task-list__icon {
+    color: grey;
+    visibility: visible; }
+
+.single-task-list__wrap {
+  padding: 7px 15px; }
+
+.single-task-list__extras {
+  display: none;
+  text-align: left;
+  padding: 10px 0;
+  margin-left: 20px;
+  margin-right: 25px; }
+  .single-task-list__extras button {
+    margin-left: 5px; }
+
+.single-task-list__icon--delete {
+  margin-right: 5px; }

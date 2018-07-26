@@ -1,24 +1,56 @@
 .all-tasks-wrap {
-  order: 1;
-  flex: 0 1 300px;
-  align-self: stretch;
-  background: #fff; }
-  @media screen and (max-width: 920px) {
-    .all-tasks-wrap {
-      flex: 0 1 300px; } }
-  @media screen and (min-width: 921px) {
-    .all-tasks-wrap {
-      flex: 0 1 400px; } }
+  width: calc(100% - 650px);
+  height: 100vh;
+  display: inline-block;
+  background: #fff;
+  border-right: 1px solid #e0e0e0; }
 
 .all-tasks__list {
   list-style-type: none;
-  padding: 0; }
-  @media screen and (max-width: 920px) {
-    .all-tasks__list {
-      width: 300px; } }
-  @media screen and (min-width: 921px) {
-    .all-tasks__list {
-      width: 400px; } }
+  padding: 0;
+  margin-bottom: 0;
+  margin-top: 10px; }
 
 .all-tasks__input-wrap {
-  padding: 10px; }
+  padding: 0 10px; }
+  .all-tasks__input-wrap .ant-input-group-addon:hover {
+    background: #fff; }
+
+.all-tasks__add-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6d6969;
+  padding: 0px; }
+
+.all-tasks__header {
+  text-align: center;
+  height: 50px;
+  line-height: 50px; }
+
+.all-tasks__archived-header {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer; }
+  .all-tasks__archived-header:hover h3 {
+    color: grey; }
+  .all-tasks__archived-header h3 {
+    color: lightgrey; }
+
+.all-tasks__list--archived {
+  display: none; }
+
+.all-tasks__list--active {
+  display: inline-block; }
+
+.all-tasks__archived-header--active h3 {
+  color: grey; }
+
+.all-tasks__archived-header--active .all-tasks__archived-header__icon {
+  transform: rotate(180deg); }
+
+.all-tasks__empty {
+  text-align: center;
+  color: lightgrey;
+  font-weight: 300; }
