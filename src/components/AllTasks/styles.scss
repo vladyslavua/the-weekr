@@ -5,10 +5,20 @@
   //flex: 1 1 auto;
   //align-self: stretch;
   width: calc(100% - #{$weektable-width});
-  height: 100vh;
+  @media screen and (max-width: 1050px) {
+    width: calc(100% - #{$weektable-width-small});
+  }
+  @media screen and (max-width: 800px) {
+    width: calc(100% - #{$weektable-width-small-four});
+  }
+  @media screen and (max-width: 600px) {
+    width: calc(100% - #{$weektable-width-small-one});
+  }
+  height: calc(100vh - #{$header-height});
   display: inline-block;
   background: #fff;
   border-right: 1px solid #e0e0e0;
+  overflow-y: scroll;
   //@media screen and (max-width: 920px) {
   //  flex: 0 1 300px;
   //}
@@ -31,7 +41,7 @@
 }
 
 .all-tasks__input-wrap {
-  padding: 0 10px;
+  padding: 0 15px;
   .ant-input-group-addon {
     &:hover {
       background: #fff;
@@ -49,8 +59,35 @@
 
 .all-tasks__header {
   text-align: center;
-  height: 50px;
-  line-height: 50px;
+  height: 45px;
+  line-height: 45px;
+  text-transform: uppercase;
+  font-size: 13px;
+  position: relative;
+  margin-bottom: 5px;
+  img {
+    height: 26px;
+    float: left;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 15px;
+  }
+  .all-tasks__settings {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 17px;
+    @media screen and (max-width: 600px) {
+      right: 77px;
+    }
+    &:hover {
+      color: $color-prime-hard;
+    }
+  }
 }
 
 .all-tasks__archived-header {
@@ -58,13 +95,15 @@
   line-height: 50px;
   text-align: center;
   cursor: pointer;
+  font-size: 13px;
+  text-transform: uppercase;
   &:hover {
     h3 {
-      color: grey;
+      color: grey!important;
     }
   }
   h3 {
-    color: lightgrey;
+    color: lightgrey!important;
   }
 }
 
@@ -78,7 +117,7 @@
 
 .all-tasks__archived-header--active {
   h3 {
-    color: grey;
+    color: grey!important;
   }
   .all-tasks__archived-header__icon {
     transform: rotate(180deg);

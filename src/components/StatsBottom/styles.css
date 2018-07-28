@@ -1,0 +1,7 @@
+.stats-bottom-wrap {
+  height: 250px;
+  width: 100%;
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  box-shadow: 0px 0px 4px -4px rgba(0, 0, 0, 0.1), 0px -2px 17px 0 rgba(0, 0, 0, 0.1); }

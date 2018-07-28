@@ -1,12 +1,58 @@
 @import '../../variables';
 
-.header-wrap {
-  height: $header-height;
-  line-height: $header-height;
+.footer-wrap {
+  //height: $header-height;
+  //line-height: $header-height;
+  //padding: 0 10px;
+  //width: 100%;
+  ////background: #f9ce32bd;
+  //background: #ff8d57;
+  //color: #fff;
+  //font-size: 15px;
+  //font-weight: 600;
+  //position: fixed;
+  //bottom: 0;
+
+  height: 40px;
+  line-height: 40px;
   padding: 0 20px;
   width: 100%;
-  background: #f9ce32bd;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
+  background: #f7f7f7;
+  border-top: 1px solid #eaeaea;
+  //color: #ff8d56;
+  color: #797979;
+  font-size: 12px;
+  font-weight: 400;
+  position: fixed;
+  bottom: 0;
+}
+
+.footer-right {
+  float: right;
+  .footer-ext-icon {
+    margin-left: 15px;
+    font-size: 14px;
+    &:hover {
+      color: $color-prime-hard;
+    }
+  }
+}
+
+.footer__divider {
+  margin: 0 15px;
+}
+
+.footer__about {
+  &:hover {
+    color: $color-prime-hard;
+  }
+}
+
+.footer__copyright {
+  position: relative;
+  font-size: 14px;
+}
+
+.footer__icon-up {
+  font-size: 10px;
 }

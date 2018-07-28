@@ -1,5 +1,5 @@
 .day-column-wrap {
-  height: calc(100vh - 64px);
+  height: calc(100vh - 40px - 40px);
   order: 0;
   flex: 1 1 auto;
   align-self: stretch;
@@ -54,4 +54,4 @@
 
 .day-column__header--active {
   font-weight: 700;
-  color: gray; }
+  color: #ff8d57; }

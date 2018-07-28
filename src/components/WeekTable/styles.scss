@@ -7,7 +7,22 @@
   width: $weektable-width;
   display: inline-block;
   height: 100vh;
-  background: grey;
+  background: $color-prime;
+  @media screen and (max-width: 1050px) {
+    width: $weektable-width-small;
+  }
+  @media screen and (max-width: 800px) {
+    width: $weektable-width-small-four;
+  }
+  @media screen and (max-width: 600px) {
+    width: $weektable-width-small-one;
+  }
+}
+
+.week-table__stats__text {
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 }
 
 .week-table-wrap--flex-container {
@@ -17,6 +32,7 @@
   justify-content: flex-start;
   align-content: stretch;
   align-items: flex-start;
+  position: relative;
 }
 
 .week-table__header {
@@ -25,14 +41,75 @@
   align-self: auto;
   height: 41px;
   line-height: 41px;
-  text-align: center;
   color: #fff;
+  padding: 0 20px;
+  position: relative;
 }
 
 .week-table__header__icon {
   cursor: pointer;
-  color: lightgrey;
+  color: #fff;
   &:hover {
-    color: #fff;
+    color: $color-prime-hard;
   }
+}
+
+.week-table__navigation {
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    left: -65px;
+    color: grey;
+    top: 1px;
+    button {
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 17px!important;
+    }
+  }
+  button {
+    margin-right: 15px;
+    font-size: 16px;
+    &:hover {
+      color: $color-prime-hard;
+    }
+  }
+}
+
+.week-table__heading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  top: 0;
+  text-transform: uppercase;
+  @media screen and (max-width: 600px) {
+    font-size: 12px;
+    width: 83px;
+  }
+}
+
+.week-table__stats {
+  font-size: 12px;
+  font-weight: 300;
+  float: right;
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.week-table__day-column-hidden {
+  display: none;
+}
+
+.week-table__nav-right {
+  position: absolute;
+  right: 5px;
+  top: 15px;
+}
+
+.week-table__nav-left {
+  position: absolute;
+  left: 5px;
+  top: 15px;
 }

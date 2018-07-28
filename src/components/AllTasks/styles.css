@@ -1,9 +1,19 @@
 .all-tasks-wrap {
   width: calc(100% - 650px);
-  height: 100vh;
+  height: calc(100vh - 40px);
   display: inline-block;
   background: #fff;
-  border-right: 1px solid #e0e0e0; }
+  border-right: 1px solid #e0e0e0;
+  overflow-y: scroll; }
+  @media screen and (max-width: 1050px) {
+    .all-tasks-wrap {
+      width: calc(100% - 450px); } }
+  @media screen and (max-width: 800px) {
+    .all-tasks-wrap {
+      width: calc(100% - 300px); } }
+  @media screen and (max-width: 600px) {
+    .all-tasks-wrap {
+      width: calc(100% - 100px); } }
 
 .all-tasks__list {
   list-style-type: none;
@@ -12,7 +22,7 @@
   margin-top: 10px; }
 
 .all-tasks__input-wrap {
-  padding: 0 10px; }
+  padding: 0 15px; }
   .all-tasks__input-wrap .ant-input-group-addon:hover {
     background: #fff; }
 
@@ -25,18 +35,44 @@
 
 .all-tasks__header {
   text-align: center;
-  height: 50px;
-  line-height: 50px; }
+  height: 45px;
+  line-height: 45px;
+  text-transform: uppercase;
+  font-size: 13px;
+  position: relative;
+  margin-bottom: 5px; }
+  .all-tasks__header img {
+    height: 26px;
+    float: left;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 15px; }
+  .all-tasks__header .all-tasks__settings {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 17px; }
+    @media screen and (max-width: 600px) {
+      .all-tasks__header .all-tasks__settings {
+        right: 77px; } }
+    .all-tasks__header .all-tasks__settings:hover {
+      color: #ff4b4b; }
 
 .all-tasks__archived-header {
   height: 50px;
   line-height: 50px;
   text-align: center;
-  cursor: pointer; }
+  cursor: pointer;
+  font-size: 13px;
+  text-transform: uppercase; }
   .all-tasks__archived-header:hover h3 {
-    color: grey; }
+    color: grey !important; }
   .all-tasks__archived-header h3 {
-    color: lightgrey; }
+    color: lightgrey !important; }
 
 .all-tasks__list--archived {
   display: none; }
@@ -45,7 +81,7 @@
   display: inline-block; }
 
 .all-tasks__archived-header--active h3 {
-  color: grey; }
+  color: grey !important; }
 
 .all-tasks__archived-header--active .all-tasks__archived-header__icon {
   transform: rotate(180deg); }

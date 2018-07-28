@@ -8,6 +8,7 @@ import indexedDB from './indexedDB';
 import Header from './components/Header/index';
 import AllTasks from './components/AllTasks/index';
 import WeekTable from './components/WeekTable/index';
+import StatsBottom from './components/StatsBottom/index';
 
 const { Content } = Layout;
 
@@ -21,11 +22,11 @@ class App extends Component {
         this.editItem = this.editItem.bind(this);
         this.archiveItem = this.archiveItem.bind(this);
         this.unarchiveItem = this.unarchiveItem.bind(this);
-        // this.hoverTodo = this.hoverTodo.bind(this);
+        this.hoverTodo = this.hoverTodo.bind(this);
     };
-    // hoverTodo(id) {
-    //     this.foo.todoHover(id);
-    // }
+    hoverTodo(id) {
+        this.foo.todoHover(id);
+    }
     addItem(item) {
         const todo = {
             text: item,
@@ -173,9 +174,10 @@ class App extends Component {
             <Layout>
                 <Header />
                 <Content className="content-wrap content-wrap--flex-container">
-                    <AllTasks addItem={this.addItem} updateItem={this.updateItem} deleteItem={this.deleteItem} todoList={this.state.todos} archivedList={this.state.archived} editItem={this.editItem} archiveItem={this.archiveItem} unarchive={this.unarchiveItem} />
+                    <AllTasks hoverTodo={this.hoverTodo} addItem={this.addItem} updateItem={this.updateItem} deleteItem={this.deleteItem} todoList={this.state.todos} archivedList={this.state.archived} editItem={this.editItem} archiveItem={this.archiveItem} unarchive={this.unarchiveItem} />
                     <WeekTable ref={foo => this.foo = foo} todoList={this.state.todos} />
                 </Content>
+                {/*<StatsBottom />*/}
             </Layout>
         );
     }

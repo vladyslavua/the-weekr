@@ -1,9 +1,33 @@
-.header-wrap {
-  height: 64px;
-  line-height: 64px;
+.footer-wrap {
+  height: 40px;
+  line-height: 40px;
   padding: 0 20px;
   width: 100%;
-  background: #f9ce32bd;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600; }
+  background: #f7f7f7;
+  border-top: 1px solid #eaeaea;
+  color: #797979;
+  font-size: 12px;
+  font-weight: 400;
+  position: fixed;
+  bottom: 0; }
+
+.footer-right {
+  float: right; }
+  .footer-right .footer-ext-icon {
+    margin-left: 15px;
+    font-size: 14px; }
+    .footer-right .footer-ext-icon:hover {
+      color: #ff4b4b; }
+
+.footer__divider {
+  margin: 0 15px; }
+
+.footer__about:hover {
+  color: #ff4b4b; }
+
+.footer__copyright {
+  position: relative;
+  font-size: 14px; }
+
+.footer__icon-up {
+  font-size: 10px; }

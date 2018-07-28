@@ -2,7 +2,7 @@
 
 .day-column-wrap {
   //width: 33%;
-  height: calc(100vh - #{$header-height});
+  height: calc(100vh - #{$header-height} - 40px);
   //background: lightblue;
   //display: inline-block;
   order: 0;
@@ -78,6 +78,6 @@
 
 .day-column__header--active {
   font-weight: 700;
-  color: gray;
+  color: $color-prime;
   //text-decoration: underline;
 }

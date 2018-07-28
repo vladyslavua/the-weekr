@@ -9,12 +9,15 @@ import { notification, Icon } from 'antd';
 class WeekTable extends Component {
     constructor(props) {
         super(props);
-        this.state = {dayStartWeek: null, items: [], dataLoaded: false, dayOfWeek: null, week: null, currentDay: null, currentWeek: null};
+        this.state = {dayStartWeek: null, items: [], dataLoaded: false, dayOfWeek: null, week: null, currentDay: null, currentWeek: null, hoverId: null, hiddenColumns: [false, false, false, false, false, false, false], navLeft: false, navRight: false, smallScreenActiveDay: null};
         this.getItemForSpecificDay = this.getItemForSpecificDay.bind(this);
         this.addItem = this.addItem.bind(this);
         this.handleTick = this.handleTick.bind(this);
         this.weekBefore = this.weekBefore.bind(this);
         this.weekAfter = this.weekAfter.bind(this);
+        this.navLeftHandler = this.navLeftHandler.bind(this);
+        this.navRightHandler = this.navRightHandler.bind(this);
+        this.goHome = this.goHome.bind(this);
     }
     componentDidMount() {
         notification.config({
@@ -30,16 +33,99 @@ class WeekTable extends Component {
         const diff = now - start;
         const oneDay = 1000 * 60 * 60 * 24;
         const dayofweek = now.getDay();
-        this.setState({dayOfWeek: dayofweek});
+        this.setState({dayOfWeek: dayofweek}, () => {
+            this.hiddenColumnsHandler();
+        });
         //current day of the week - not changed
         this.setState({currentDay: dayofweek});
         const day = Math.floor(diff / oneDay) - dayofweek + 1;
         this.getItems(day, day + 7);
         this.setState({dayStartWeek: day});
+        window.addEventListener("resize", (event) => {
+            this.hiddenColumnsHandler();
+        });
     }
-    // todoHover(id) {
-    //     console.log(id);
-    // }
+    hiddenColumnsHandler() {
+        const windowWidth = window.innerWidth;
+        if (this.state.smallScreenActiveDay === null) {
+            this.setState({smallScreenActiveDay: this.state.dayOfWeek});
+        }
+        if (windowWidth < 600) {
+            let newState = [true, true, true, true, true, true, true];
+            newState[this.state.dayOfWeek - 1] = false;
+            this.setState({hiddenColumns: newState});
+            this.setState({navLeft: true});
+            this.setState({navRight: true});
+            return;
+        }
+        if (windowWidth < 800) {
+            if (this.state.dayOfWeek < 5) {
+                this.setState({hiddenColumns: [false, false, false, false, true, true, true]});
+                this.setState({navLeft: false});
+                this.setState({navRight: true});
+            } else {
+                this.setState({hiddenColumns: [true, true, true, false, false, false, false]});
+                this.setState({navLeft: true});
+                this.setState({navRight: false});
+            }
+            return;
+        }
+        if (windowWidth >= 800) {
+            this.setState({hiddenColumns: [false, false, false, false, false, false, false]});
+            this.setState({navLeft: false});
+            this.setState({navRight: false});
+        }
+    }
+    navLeftHandler() {
+        const windowWidth = window.innerWidth;
+        if (windowWidth < 600) {
+            let newState = [true, true, true, true, true, true, true];
+            newState[this.state.smallScreenActiveDay - 1 - 1] = false;
+            this.setState({hiddenColumns: newState, smallScreenActiveDay: this.state.smallScreenActiveDay - 1}, () => {
+                if (this.state.smallScreenActiveDay === 1) {
+                    this.setState({navLeft: false});
+                }
+                if (this.state.smallScreenActiveDay === 6) {
+                    this.setState({navRight: true});
+                }
+            });
+            return;
+        }
+        if (windowWidth < 800) {
+            this.setState({hiddenColumns: [false, false, false, false, true, true, true]});
+            this.setState({navLeft: false});
+            this.setState({navRight: true});
+            return;
+        }
+    }
+    navRightHandler() {
+        const windowWidth = window.innerWidth;
+        if (windowWidth < 600) {
+            let newState = [true, true, true, true, true, true, true];
+            newState[this.state.smallScreenActiveDay + 1 - 1] = false;
+            this.setState({hiddenColumns: newState, smallScreenActiveDay: this.state.smallScreenActiveDay + 1}, () => {
+                if (this.state.smallScreenActiveDay === 7) {
+                    this.setState({navRight: false});
+                }
+                if (this.state.smallScreenActiveDay === 2) {
+                    this.setState({navLeft: true});
+                }
+            });
+            return;
+        }
+        if (windowWidth < 800) {
+            this.setState({hiddenColumns: [true, true, true, false, false, false, false]});
+            this.setState({navLeft: true});
+            this.setState({navRight: false});
+            return;
+        }
+    }
+    goHome() {
+        this.componentDidMount();
+    }
+    todoHover(id) {
+        this.setState({hoverId: id});
+    }
     getItems(startDay, endDay) {
         indexedDB.table('days')
             .where('day').inAnyRange([[startDay, endDay]])
@@ -98,6 +184,9 @@ class WeekTable extends Component {
         }
 
     }
+    calculateCompleted() {
+        return this.state.items.filter((value) => value.done === true)
+    }
     handleTick(id) {
         const index = this.state.items.map((e) => e.id).indexOf(id);
         const newList = this.state.items.map((item) => Object.assign({}, item));
@@ -149,17 +238,25 @@ class WeekTable extends Component {
             return (
                 <div className="week-table-wrap">
                     <header className="week-table__header">
-                        {/*<Icon type="home" />*/}
-                        <Icon onClick={this.weekBefore} className="week-table__header__icon" type="left" /> Week {this.state.week} <Icon onClick={this.weekAfter} className="week-table__header__icon" type="right" />
+                        <span className="week-table__navigation">
+                            <button onClick={this.goHome} className="button-no-decoration"><Icon type="home" /></button>
+                            <button className="button-no-decoration"><Icon type="line-chart" /></button>
+                            <span className="week-table__stats"><span className="week-table__stats__text"> Progress: </span>{this.calculateCompleted().length} / {this.state.items.length}</span>
+                        </span>
+                        <span className="week-table__heading">
+                            <Icon onClick={this.weekBefore} className="week-table__header__icon" type="left" /> Week {this.state.week} <Icon onClick={this.weekAfter} className="week-table__header__icon" type="right" />
+                        </span>
                     </header>
                     <div className="week-table-wrap--flex-container">
-                        <DayColumn dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={1} day={this.state.dayStartWeek} items={this.getItemForSpecificDay(this.state.dayStartWeek)} todoList={this.props.todoList} handleTick={this.handleTick} />
-                        <DayColumn dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={2} day={this.state.dayStartWeek + 1} items={this.getItemForSpecificDay(this.state.dayStartWeek + 1)} todoList={this.props.todoList} handleTick={this.handleTick} />
-                        <DayColumn dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={3} day={this.state.dayStartWeek + 2} items={this.getItemForSpecificDay(this.state.dayStartWeek + 2)} todoList={this.props.todoList} handleTick={this.handleTick} />
-                        <DayColumn dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={4} day={this.state.dayStartWeek + 3} items={this.getItemForSpecificDay(this.state.dayStartWeek + 3)} todoList={this.props.todoList} handleTick={this.handleTick} />
-                        <DayColumn dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={5} day={this.state.dayStartWeek + 4} items={this.getItemForSpecificDay(this.state.dayStartWeek + 4)} todoList={this.props.todoList} handleTick={this.handleTick} />
-                        <DayColumn dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={6} day={this.state.dayStartWeek + 5} items={this.getItemForSpecificDay(this.state.dayStartWeek + 5)} todoList={this.props.todoList} handleTick={this.handleTick} />
-                        <DayColumn dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={7} day={this.state.dayStartWeek + 6} items={this.getItemForSpecificDay(this.state.dayStartWeek + 6)} todoList={this.props.todoList} handleTick={this.handleTick} />
+                        {!this.state.hiddenColumns[0] ? (<DayColumn className={(this.state.hiddenColumns[0] ? 'week-table__day-column-hidden' : '')} hoverId={this.state.hoverId} dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={1} day={this.state.dayStartWeek} items={this.getItemForSpecificDay(this.state.dayStartWeek)} todoList={this.props.todoList} handleTick={this.handleTick} />) : ''}
+                        {!this.state.hiddenColumns[1] ? (<DayColumn className={(this.state.hiddenColumns[1] ? 'week-table__day-column-hidden' : '')} hoverId={this.state.hoverId} dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={2} day={this.state.dayStartWeek + 1} items={this.getItemForSpecificDay(this.state.dayStartWeek + 1)} todoList={this.props.todoList} handleTick={this.handleTick} />) : ''}
+                        {!this.state.hiddenColumns[2] ? (<DayColumn className={(this.state.hiddenColumns[2] ? 'week-table__day-column-hidden' : '')} hoverId={this.state.hoverId} dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={3} day={this.state.dayStartWeek + 2} items={this.getItemForSpecificDay(this.state.dayStartWeek + 2)} todoList={this.props.todoList} handleTick={this.handleTick} />) : ''}
+                        {!this.state.hiddenColumns[3] ? (<DayColumn className={(this.state.hiddenColumns[3] ? 'week-table__day-column-hidden' : '')} hoverId={this.state.hoverId} dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={4} day={this.state.dayStartWeek + 3} items={this.getItemForSpecificDay(this.state.dayStartWeek + 3)} todoList={this.props.todoList} handleTick={this.handleTick} />) : ''}
+                        {!this.state.hiddenColumns[4] ? (<DayColumn className={(this.state.hiddenColumns[4] ? 'week-table__day-column-hidden' : '')} hoverId={this.state.hoverId} dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={5} day={this.state.dayStartWeek + 4} items={this.getItemForSpecificDay(this.state.dayStartWeek + 4)} todoList={this.props.todoList} handleTick={this.handleTick} />) : ''}
+                        {!this.state.hiddenColumns[5] ? (<DayColumn className={(this.state.hiddenColumns[5] ? 'week-table__day-column-hidden' : '')} hoverId={this.state.hoverId} dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={6} day={this.state.dayStartWeek + 5} items={this.getItemForSpecificDay(this.state.dayStartWeek + 5)} todoList={this.props.todoList} handleTick={this.handleTick} />) : ''}
+                        {!this.state.hiddenColumns[6] ? (<DayColumn className={(this.state.hiddenColumns[6] ? 'week-table__day-column-hidden' : '')} hoverId={this.state.hoverId} dayOfWeek={this.state.dayOfWeek} addItem={this.addItem} weekday={7} day={this.state.dayStartWeek + 6} items={this.getItemForSpecificDay(this.state.dayStartWeek + 6)} todoList={this.props.todoList} handleTick={this.handleTick} />) : ''}
+                        <button onClick={this.navRightHandler} className={"button-no-decoration week-table__nav-right " + (!this.state.navRight ? 'hidden' : '')}><Icon type="caret-right" /></button>
+                        <button onClick={this.navLeftHandler} className={"button-no-decoration week-table__nav-left " + (!this.state.navLeft ? 'hidden' : '')}><Icon type="caret-left" /></button>
                     </div>
                 </div>
             );

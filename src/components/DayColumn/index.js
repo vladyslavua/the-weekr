@@ -48,7 +48,7 @@ class DayColumn extends Component {
                 selectedDayTask = selectedDayTaskArray[0];
             }
             return (
-                <DayColumnItem selectedDayTask={selectedDayTask} item={item} key={item.id} addItem={this.props.addItem} day={this.props.day} tickItem={this.props.handleTick}/>
+                <DayColumnItem hoverId={this.props.hoverId} selectedDayTask={selectedDayTask} item={item} key={item.id} addItem={this.props.addItem} day={this.props.day} tickItem={this.props.handleTick}/>
             );
         });
         return (

@@ -20,6 +20,8 @@ class SingleTask extends Component {
         this.editModeHandler = this.editModeHandler.bind(this);
         this.newTextHandler = this.newTextHandler.bind(this);
         this.saveEditedItem = this.saveEditedItem.bind(this);
+        this.handleMouseEnter = this.handleMouseEnter.bind(this);
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
     };
     componentDidMount() {
         this.setState({newText: this.props.item.text});
@@ -30,13 +32,18 @@ class SingleTask extends Component {
     }
     componentWillMount() {
         document.addEventListener('mousedown', this.handleClick, false);
-        // this.watchForNativeMouseLeave();
     }
     // watchForNativeMouseLeave() {
     //     document.addEventListener('mouseleave', this.handleHover, false);
     // }
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClick, false);
+    }
+    handleMouseEnter() {
+        // this.props.hoverTodo(this.props.item.id);
+    }
+    handleMouseLeave() {
+        // this.props.hoverTodo(null);
     }
     handleClick = (e) => {
         if (this.node.contains(e.target)) {
@@ -46,7 +53,7 @@ class SingleTask extends Component {
         this.setState({active: false});
     };
     // handleHover = (e) => {
-    //     console.log(e);
+    //     console.log('london');
     //     this.props.hoverTodo(this.props.item.id);
     // };
     onChange(e) {
@@ -66,9 +73,11 @@ class SingleTask extends Component {
             this.setState({active: false});
             this.setState({editMode: false});
         } else {
-            this.setState({active: true});
+            this.setState({active: true}, ()=>{
+                console.log(this.state.active);
+            });
         }
-
+        // this.props.hoverTodo(this.props.item.id);
     }
     editModeHandler() {
         if (this.state.editMode) {

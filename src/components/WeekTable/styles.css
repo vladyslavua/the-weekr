@@ -2,7 +2,20 @@
   width: 650px;
   display: inline-block;
   height: 100vh;
-  background: grey; }
+  background: #ff8d57; }
+  @media screen and (max-width: 1050px) {
+    .week-table-wrap {
+      width: 450px; } }
+  @media screen and (max-width: 800px) {
+    .week-table-wrap {
+      width: 300px; } }
+  @media screen and (max-width: 600px) {
+    .week-table-wrap {
+      width: 100px; } }
+
+@media screen and (max-width: 800px) {
+  .week-table__stats__text {
+    display: none; } }
 
 .week-table-wrap--flex-container {
   display: flex;
@@ -10,7 +23,8 @@
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-content: stretch;
-  align-items: flex-start; }
+  align-items: flex-start;
+  position: relative; }
 
 .week-table__header {
   order: 0;
@@ -18,11 +32,63 @@
   align-self: auto;
   height: 41px;
   line-height: 41px;
-  text-align: center;
-  color: #fff; }
+  color: #fff;
+  padding: 0 20px;
+  position: relative; }
 
 .week-table__header__icon {
   cursor: pointer;
-  color: lightgrey; }
+  color: #fff; }
   .week-table__header__icon:hover {
-    color: #fff; }
+    color: #ff4b4b; }
+
+@media screen and (max-width: 600px) {
+  .week-table__navigation {
+    position: absolute;
+    left: -65px;
+    color: grey;
+    top: 1px; }
+    .week-table__navigation button {
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 17px !important; } }
+
+.week-table__navigation button {
+  margin-right: 15px;
+  font-size: 16px; }
+  .week-table__navigation button:hover {
+    color: #ff4b4b; }
+
+.week-table__heading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  top: 0;
+  text-transform: uppercase; }
+  @media screen and (max-width: 600px) {
+    .week-table__heading {
+      font-size: 12px;
+      width: 83px; } }
+
+.week-table__stats {
+  font-size: 12px;
+  font-weight: 300;
+  float: right; }
+  @media screen and (max-width: 600px) {
+    .week-table__stats {
+      display: none; } }
+
+.week-table__day-column-hidden {
+  display: none; }
+
+.week-table__nav-right {
+  position: absolute;
+  right: 5px;
+  top: 15px; }
+
+.week-table__nav-left {
+  position: absolute;
+  left: 5px;
+  top: 15px; }

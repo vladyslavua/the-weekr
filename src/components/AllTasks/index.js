@@ -33,7 +33,7 @@ class AllTasks extends Component {
     render() {
         const items = this.props.todoList.slice(0).reverse().map((item) => {
             return (
-                <SingleTask item={item} updateItem={this.props.updateItem} editItem={this.props.editItem} archiveItem={this.props.archiveItem} key={item.id} archived={false} />
+                <SingleTask hoverTodo={this.props.hoverTodo} item={item} updateItem={this.props.updateItem} editItem={this.props.editItem} archiveItem={this.props.archiveItem} key={item.id} archived={false} />
             );
         });
         let archivedItems = this.props.archivedList.slice(0).reverse().map((item) => {
@@ -52,7 +52,11 @@ class AllTasks extends Component {
         // }
         return (
             <section className="all-tasks-wrap">
-                <header className="all-tasks__header"><h3>All Tasks</h3></header>
+                <header className="all-tasks__header">
+                    <img src="/logo.png" alt="The Weekr" />
+                    <h3>All Tasks</h3>
+                    <button className="button-no-decoration all-tasks__settings"><Icon type="setting" /></button>
+                </header>
                 <form onSubmit={this.handleSubmit} className="all-tasks__input-wrap">
                     {/*<input value={this.state.todoItem} onChange={this.handleChange} />*/}
                     {/*<button type="submit">ADD</button>*/}
