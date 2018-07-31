@@ -33,12 +33,12 @@ class AllTasks extends Component {
     render() {
         const items = this.props.todoList.slice(0).reverse().map((item) => {
             return (
-                <SingleTask hoverTodo={this.props.hoverTodo} item={item} updateItem={this.props.updateItem} editItem={this.props.editItem} archiveItem={this.props.archiveItem} key={item.id} archived={false} />
+                <SingleTask hoverTodo={this.props.hoverTodo} item={item} starHandler={this.props.todoStarHandler} updateItem={this.props.updateItem} editItem={this.props.editItem} archiveItem={this.props.archiveItem} key={item.id} archived={false} />
             );
         });
         let archivedItems = this.props.archivedList.slice(0).reverse().map((item) => {
             return (
-                <SingleTask item={item} deleteItem={this.props.deleteItem} key={item.id} archived={true} unarchive={this.props.unarchive} />
+                <SingleTask item={item} deleteItem={this.props.deleteItem} starHandler={this.props.todoStarHandler} key={item.id} archived={true} unarchive={this.props.unarchive} />
             );
         });
         if (!archivedItems.length) {
@@ -53,14 +53,14 @@ class AllTasks extends Component {
         return (
             <section className="all-tasks-wrap">
                 <header className="all-tasks__header">
-                    <img src="/logo.png" alt="The Weekr" />
+                    <img src="/logo.png" alt="The Weekr Logo" />
                     <h3>All Tasks</h3>
                     <button className="button-no-decoration all-tasks__settings"><Icon type="setting" /></button>
                 </header>
                 <form onSubmit={this.handleSubmit} className="all-tasks__input-wrap">
                     {/*<input value={this.state.todoItem} onChange={this.handleChange} />*/}
                     {/*<button type="submit">ADD</button>*/}
-                    <Input placeholder={'My next todo...'} value={this.state.todoItem} onChange={this.handleChange} addonAfter={<button className="all-tasks__add-button" type="submit">ADD</button>} />
+                    <Input placeholder={'My next task...'} value={this.state.todoItem} onChange={this.handleChange} addonAfter={<button className="all-tasks__add-button" type="submit">ADD</button>} />
                 </form>
                 <ul className="all-tasks__list">
                     {items}

@@ -7,7 +7,7 @@
   height: 35px;
   &:hover {
     background: #f3f3f3;
-    .single-task-list__icon {
+    .single-task-list__icon, .single-task-list__icon__star {
       visibility: visible;
     }
   }
@@ -16,12 +16,16 @@
   }
 }
 
+.single-task-list__icon--delete--active {
+  visibility: visible!important;
+}
+
 .ant-checkbox {
   //zoom: 1.3;
   //transform: scale(1.2);
 }
 
-.single-task-list__icon {
+.single-task-list__icon, .single-task-list__icon__star {
   visibility: hidden;
   cursor: pointer;
   line-height: 22px;
@@ -33,6 +37,14 @@
 
 .single-task-list__icon-wrap {
   float: right;
+}
+
+.all-tasks__list--archivedall-tasks__list--active {
+  .single-task-list__icon--delete {
+    &:hover {
+      color: red;
+    }
+  }
 }
 
 .single-task-list__item-text {
@@ -64,6 +76,7 @@
   .single-task-list__item-text {
     overflow: inherit;
     white-space: normal;
+    height: 32px;
   }
   .single-task-list__extras {
     display: block;
@@ -85,10 +98,38 @@
   margin-left: 20px;
   margin-right: 25px;
   button {
-    margin-left: 5px;
+    //margin-left: 5px;
   }
 }
 
 .single-task-list__icon--delete {
+  margin-right: 7px;
+}
+
+.single-task-list__extras__button {
   margin-right: 5px;
+}
+
+.single-task-list__icon--delete--active {
+  //color: $color-prime;
+}
+
+.single-task-list__extra-buttons {
+  position: absolute;
+  right: 15px;
+  color: lightgray;
+  &:hover {
+    color: grey;
+  }
+}
+
+.single-task-list__extra-buttons--one {
+  top: 30px;
+}
+
+.single-task-list__extra-buttons--two {
+  top: 55px;
+  &:hover {
+    color: red;
+  }
 }

@@ -15,7 +15,7 @@ const { Content } = Layout;
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { todos: [], archived: [] };
+        this.state = { todos: [], archived: [], statsBottom: false, landingBottom: false, weekItems: [], slowHideBottom: false };
         this.addItem = this.addItem.bind(this);
         this.updateItem = this.updateItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
@@ -23,6 +23,8 @@ class App extends Component {
         this.archiveItem = this.archiveItem.bind(this);
         this.unarchiveItem = this.unarchiveItem.bind(this);
         this.hoverTodo = this.hoverTodo.bind(this);
+        this.statsBottomHandler = this.statsBottomHandler.bind(this);
+        this.todoStarHandler = this.todoStarHandler.bind(this);
     };
     hoverTodo(id) {
         this.foo.todoHover(id);
@@ -32,7 +34,8 @@ class App extends Component {
             text: item,
             done: false,
             archived: 0,
-            updatedOn: + new Date()
+            updatedOn: + new Date(),
+            starred: false
         };
         indexedDB.table('todos')
             .add(todo)
@@ -86,6 +89,7 @@ class App extends Component {
                 const newList = this.state.archived.filter((todo) => todo.id !== id);
                 this.setState({ archived: newList });
                 this.deleteDayItem(id);
+                this.deleteSubtasks(id);
             })
             .catch((err) => {
                 notification.open({
@@ -96,6 +100,13 @@ class App extends Component {
     }
     deleteDayItem(id) {
         indexedDB.table('days')
+            .where('taskId').equals(id)
+            .delete()
+            .then(() => {
+            });
+    }
+    deleteSubtasks(id) {
+        indexedDB.table('subtasks')
             .where('taskId').equals(id)
             .delete()
             .then(() => {
@@ -140,6 +151,22 @@ class App extends Component {
                 });
             });
     }
+    todoStarHandler(id, val) {
+        indexedDB.table('todos')
+            .update(id, { starred: val })
+            .then(() => {
+                const index = this.state.todos.map((e) => e.id).indexOf(id);
+                const newList = this.state.todos.map((item) => Object.assign({}, item));
+                newList[index].starred = val;
+                this.setState({ todos: newList });
+            })
+            .catch(() => {
+                notification.open({
+                    message: 'Error',
+                    description: 'Something went wrong. Please refresh the browser.',
+                });
+            });
+    }
     componentDidMount() {
         notification.config({
             placement: 'bottomLeft',
@@ -169,15 +196,27 @@ class App extends Component {
                 });
             });
     }
+    statsBottomHandler() {
+        if (this.state.statsBottom) {
+            this.setState({slowHideBottom: true});
+            setTimeout(() => {
+                this.setState({statsBottom: false});
+            }, 500);
+            // this.setState({statsBottom: false});
+        } else {
+            this.setState({slowHideBottom: false});
+            this.setState({statsBottom: true});
+        }
+    }
     render() {
         return (
             <Layout>
                 <Header />
                 <Content className="content-wrap content-wrap--flex-container">
-                    <AllTasks hoverTodo={this.hoverTodo} addItem={this.addItem} updateItem={this.updateItem} deleteItem={this.deleteItem} todoList={this.state.todos} archivedList={this.state.archived} editItem={this.editItem} archiveItem={this.archiveItem} unarchive={this.unarchiveItem} />
-                    <WeekTable ref={foo => this.foo = foo} todoList={this.state.todos} />
+                    <AllTasks todoStarHandler={this.todoStarHandler} hoverTodo={this.hoverTodo} addItem={this.addItem} updateItem={this.updateItem} deleteItem={this.deleteItem} todoList={this.state.todos} archivedList={this.state.archived} editItem={this.editItem} archiveItem={this.archiveItem} unarchive={this.unarchiveItem} />
+                    <WeekTable ref={foo => this.foo = foo} todoList={this.state.todos} statsBottomHandler={this.statsBottomHandler} />
                 </Content>
-                {/*<StatsBottom />*/}
+                {this.state.statsBottom ? (<StatsBottom slowHide={this.state.slowHideBottom} statsBottomHandler={this.statsBottomHandler} />) : ''}
             </Layout>
         );
     }

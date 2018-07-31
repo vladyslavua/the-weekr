@@ -1,11 +1,62 @@
 @import '../../variables';
 
 .stats-bottom-wrap {
+  padding: 20px 80px;
   height: 250px;
   width: 100%;
   background: #fff;
   position: fixed;
   bottom: 0;
+  animation: bottomAppearance 0.5s;
   //border-top: 1px solid lightgray;
   box-shadow: 0px 0px 4px -4px rgba(0, 0, 0, 0.1), 0px -2px 17px 0 rgba(0, 0, 0, 0.1);
+}
+
+@keyframes bottomAppearance{
+  from {bottom: -250px;}
+  to {bottom: 0;}
+}
+
+.slow-hide-active {
+  animation: bottomHide 0.5s;
+  bottom: -250px!important;
+}
+
+@keyframes bottomHide{
+  from {bottom: 0;}
+  to {bottom: -250px;}
+}
+
+.stats-bottom__x-axis-legend {
+  position: absolute;
+  bottom: 5px;
+  text-align: center;
+  left: 0;
+  right: 0;
+  color: #505050;
+  font-weight: 600;
+}
+
+.stats-bottom__y-axis-legend {
+  position: absolute;
+  left: -35px;
+  top: 100px;
+  transform: rotate(-90deg);
+  color: #505050;
+  font-weight: 600;
+}
+
+.stats-bottom__close-button {
+  position: absolute;
+  top: -13px;
+  right: 15px;
+  font-size: 18px;
+  background: $color-prime;
+  border-radius: 100%;
+  height: 30px;
+  width: 30px;
+  color: #fff;
+  &:hover {
+    background: $color-prime-hard;
+  }
 }

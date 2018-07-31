@@ -18,21 +18,24 @@ class WeekTable extends Component {
         this.navLeftHandler = this.navLeftHandler.bind(this);
         this.navRightHandler = this.navRightHandler.bind(this);
         this.goHome = this.goHome.bind(this);
+        this.statsBottomHandler = this.statsBottomHandler.bind(this);
     }
     componentDidMount() {
         notification.config({
             placement: 'bottomLeft',
         });
         const now = new Date();
-        const onejan = new Date(now.getFullYear(), 0, 1);
-        const week = Math.ceil( (((now - onejan) / 86400000) + onejan.getDay() + 1) / 7 );
+        const week = this.getWeekNumber(new Date());
         this.setState({week: week});
         //current week - not changed
         this.setState({currentWeek: week});
         const start = new Date(now.getFullYear(), 0, 0);
-        const diff = now - start;
+        const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
         const oneDay = 1000 * 60 * 60 * 24;
-        const dayofweek = now.getDay();
+        let dayofweek = now.getDay();
+        if (dayofweek === 0) {
+            dayofweek = 7;
+        }
         this.setState({dayOfWeek: dayofweek}, () => {
             this.hiddenColumnsHandler();
         });
@@ -44,6 +47,13 @@ class WeekTable extends Component {
         window.addEventListener("resize", (event) => {
             this.hiddenColumnsHandler();
         });
+    }
+    getWeekNumber(d) {
+        d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+        var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+        var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+        return weekNo;
     }
     hiddenColumnsHandler() {
         const windowWidth = window.innerWidth;
@@ -233,6 +243,9 @@ class WeekTable extends Component {
         });
         this.setState({dayOfWeek: null});
     }
+    statsBottomHandler() {
+        this.props.statsBottomHandler();
+    }
     render() {
         if (this.state.dataLoaded) {
             return (
@@ -240,7 +253,7 @@ class WeekTable extends Component {
                     <header className="week-table__header">
                         <span className="week-table__navigation">
                             <button onClick={this.goHome} className="button-no-decoration"><Icon type="home" /></button>
-                            <button className="button-no-decoration"><Icon type="line-chart" /></button>
+                            <button onClick={this.statsBottomHandler} className="button-no-decoration"><Icon type="line-chart" /></button>
                             <span className="week-table__stats"><span className="week-table__stats__text"> Progress: </span>{this.calculateCompleted().length} / {this.state.items.length}</span>
                         </span>
                         <span className="week-table__heading">

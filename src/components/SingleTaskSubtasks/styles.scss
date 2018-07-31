@@ -1,0 +1,48 @@
+@import '../../variables';
+
+.single-task-subtasks__input-wrap {
+  //margin-top: 20px;
+  .ant-input-group-addon {
+    &:hover {
+      background: #fff;
+    }
+  }
+}
+
+.single-task-subtasks__input {
+  font-size: 11px;
+  height: 25px;
+}
+
+.single-task-subtasks__list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.single-task-subtasks__add-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6d6969;
+  padding: 0px;
+  font-size: 11px;
+}
+
+.single-task-subtasks__delete-subtask {
+  display: none;
+  float: right;
+}
+
+.single-task-subtasks__item {
+  &:hover {
+    .single-task-subtasks__delete-subtask {
+      display: inline-block;
+    }
+  }
+  .ant-checkbox {
+    transform: scale(0.8);
+  }
+  font-size: 13px;
+}
