@@ -32,10 +32,13 @@
 
 .single-task-subtasks__delete-subtask {
   display: none;
-  float: right;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .single-task-subtasks__item {
+  position: relative;
   &:hover {
     .single-task-subtasks__delete-subtask {
       display: inline-block;
@@ -45,4 +48,10 @@
     transform: scale(0.8);
   }
   font-size: 13px;
+}
+
+.single-task-subtasks__text {
+  display: inline-block;
+  width: calc(100% - 20px);
+  margin-top: 1px;
 }

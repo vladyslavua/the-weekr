@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './styles.css';
 import SingleTaskSubtasks from '../SingleTaskSubtasks/index';
 
-import { Checkbox, Icon, Button, Input } from 'antd';
+import { Checkbox, Icon, Input } from 'antd';
 
 const { TextArea } = Input;
 

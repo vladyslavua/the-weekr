@@ -100,7 +100,8 @@ class SingleTaskSubtasks extends Component {
 		const subtasks = this.state.subtasks.map((item, index) => {
 			return (
 				<li key={item.id} className="single-task-subtasks__item">
-					<Checkbox onChange={() => this.onChangeSubtaskCheckbox(index, item.id)} checked={item.done} /> {item.text}
+					<Checkbox onChange={() => this.onChangeSubtaskCheckbox(index, item.id)} checked={item.done} />
+					<span className="single-task-subtasks__text">{item.text}</span>
 					<button onClick={() => this.deleteSubtask(item.id)} className="button-no-decoration single-task-subtasks__delete-subtask"><Icon type="close" /></button>
 				</li>
 			);

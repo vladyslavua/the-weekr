@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './styles.css';
 
 import indexedDB from '../../indexedDB';
-import { notification, Icon } from 'antd';
+import { notification } from 'antd';
 
 import { LineChart, Line, XAxis, CartesianGrid, ResponsiveContainer, YAxis } from 'recharts';
 
@@ -70,15 +70,14 @@ class StatsBottom extends Component {
 	}
 	render() {
 		return (
-			<section className={"stats-bottom-wrap " + (this.props.slowHide?'slow-hide-active':'')}>
-				<button onClick={this.props.statsBottomHandler} className="button-no-decoration stats-bottom__close-button"><Icon type="close" /></button>
+			<section className="stats-bottom__wrap">
 				<ResponsiveContainer width='100%'>
 					<LineChart height={180} data={this.state.data}>
 						<CartesianGrid strokeDasharray="3 3" />
 						<XAxis dataKey="week" stroke="#9e9e9e">
 						</XAxis>
 						<YAxis stroke="#9e9e9e" />
-						<Line type="monotone" isAnimationActive={false} dataKey="successRate" stroke="#ff8d57" />
+						<Line type="linear" isAnimationActive={false} dataKey="successRate" stroke="#ff8d57" />
 					</LineChart>
 				</ResponsiveContainer>
 				<div className="stats-bottom__x-axis-legend">Weeks</div>

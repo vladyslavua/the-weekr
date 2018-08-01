@@ -21,11 +21,19 @@
 
 .single-task-subtasks__delete-subtask {
   display: none;
-  float: right; }
+  position: absolute;
+  right: 0;
+  top: 0; }
 
 .single-task-subtasks__item {
+  position: relative;
   font-size: 13px; }
   .single-task-subtasks__item:hover .single-task-subtasks__delete-subtask {
     display: inline-block; }
   .single-task-subtasks__item .ant-checkbox {
     transform: scale(0.8); }
+
+.single-task-subtasks__text {
+  display: inline-block;
+  width: calc(100% - 20px);
+  margin-top: 1px; }

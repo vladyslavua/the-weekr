@@ -66,3 +66,13 @@ h1, h2, h3, h4, h5 {
 .hidden {
   display: none;
 }
+
+.drawer-settings__wrap {
+  text-align: center;
+}
+
+.ant-drawer-title {
+  text-transform: uppercase;
+  font-size: 15px!important;
+  color: inherit!important;
+}

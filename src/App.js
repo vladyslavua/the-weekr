@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
 
-import { Layout, notification } from 'antd';
+import { Layout, notification, Drawer, Button, Modal, message } from 'antd';
 import indexedDB from './indexedDB';
 
 import Header from './components/Header/index';
 import AllTasks from './components/AllTasks/index';
 import WeekTable from './components/WeekTable/index';
 import StatsBottom from './components/StatsBottom/index';
+import LandingBottom from './components/LandingBottom/index';
+import BottomSlider from './components/BottomSlider/index';
 
 const { Content } = Layout;
+const confirm = Modal.confirm;
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { todos: [], archived: [], statsBottom: false, landingBottom: false, weekItems: [], slowHideBottom: false };
+        this.state = { todos: [], archived: [], statsBottom: false, landingBottom: false, weekItems: [], slowHideBottom: false, showHideSettings: false };
+        this.bottomSlider = React.createRef();
         this.addItem = this.addItem.bind(this);
         this.updateItem = this.updateItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
@@ -25,6 +29,11 @@ class App extends Component {
         this.hoverTodo = this.hoverTodo.bind(this);
         this.statsBottomHandler = this.statsBottomHandler.bind(this);
         this.todoStarHandler = this.todoStarHandler.bind(this);
+        this.settingsDrawerHandler = this.settingsDrawerHandler.bind(this);
+        this.eraseDb = this.eraseDb.bind(this);
+        this.landingBottomHandler = this.landingBottomHandler.bind(this);
+        this.onCloseBottomSlider = this.onCloseBottomSlider.bind(this);
+        this.showDeleteConfirm = this.showDeleteConfirm.bind(this);
     };
     hoverTodo(id) {
         this.foo.todoHover(id);
@@ -195,28 +204,95 @@ class App extends Component {
                     description: 'Something went wrong. Please refresh the browser.',
                 });
             });
+        indexedDB.table('user')
+            .toArray()
+            .then((user) => {
+                if (user.length === 0) {
+                    this.landingBottomHandler();
+                    indexedDB.table('user')
+                        .add({seenLanding: true})
+                        .then(() => {})
+                } else {
+
+                }
+            })
     }
     statsBottomHandler() {
-        if (this.state.statsBottom) {
-            this.setState({slowHideBottom: true});
-            setTimeout(() => {
-                this.setState({statsBottom: false});
-            }, 500);
-            // this.setState({statsBottom: false});
+        this.bottomSlider.current.landingBottomHandler(() => {
+            if (this.state.statsBottom) {
+                this.onCloseBottomSlider()
+            } else {
+                this.setState({statsBottom: true});
+            }
+        });
+    }
+    landingBottomHandler() {
+        this.bottomSlider.current.landingBottomHandler(() => {
+            if (this.state.landingBottom) {
+                this.onCloseBottomSlider()
+            } else {
+                this.setState({landingBottom: true});
+            }
+        });
+    }
+    onCloseBottomSlider() {
+        this.setState({landingBottom: false});
+        this.setState({statsBottom: false});
+    }
+    settingsDrawerHandler() {
+        if (this.state.showHideSettings) {
+            this.setState({showHideSettings: false});
         } else {
-            this.setState({slowHideBottom: false});
-            this.setState({statsBottom: true});
+            this.setState({showHideSettings: true});
         }
+    }
+    eraseDb() {
+        indexedDB.delete().then(() => {
+            message.success('Database has been successfully erased.');
+            window.location.reload();
+        }).catch((err) => {
+            message.error('Something went wrong. Database cannot be erased.');
+        }).finally(() => {
+        });
+    }
+    showDeleteConfirm() {
+        const that = this;
+        confirm({
+            title: 'Are you sure erase your data?',
+            content: 'All your data will be lost.',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                that.eraseDb();
+            },
+            onCancel() {
+            },
+        });
     }
     render() {
         return (
             <Layout>
-                <Header />
+                <Header landingBottomHandler={this.landingBottomHandler} />
                 <Content className="content-wrap content-wrap--flex-container">
-                    <AllTasks todoStarHandler={this.todoStarHandler} hoverTodo={this.hoverTodo} addItem={this.addItem} updateItem={this.updateItem} deleteItem={this.deleteItem} todoList={this.state.todos} archivedList={this.state.archived} editItem={this.editItem} archiveItem={this.archiveItem} unarchive={this.unarchiveItem} />
+                    <AllTasks todoStarHandler={this.todoStarHandler} hoverTodo={this.hoverTodo} addItem={this.addItem} updateItem={this.updateItem} deleteItem={this.deleteItem} todoList={this.state.todos} archivedList={this.state.archived} editItem={this.editItem} archiveItem={this.archiveItem} unarchive={this.unarchiveItem} settingsDrawerHandler={this.settingsDrawerHandler} />
                     <WeekTable ref={foo => this.foo = foo} todoList={this.state.todos} statsBottomHandler={this.statsBottomHandler} />
                 </Content>
-                {this.state.statsBottom ? (<StatsBottom slowHide={this.state.slowHideBottom} statsBottomHandler={this.statsBottomHandler} />) : ''}
+                <BottomSlider ref={this.bottomSlider} onCloseBottomSlider={this.onCloseBottomSlider}>
+                    {this.state.landingBottom ? (<LandingBottom />) : ''}
+                    {this.state.statsBottom ? (<StatsBottom />) : ''}
+                </BottomSlider>
+                <Drawer
+                    title="Settings"
+                    placement="left"
+                    closable={false}
+                    onClose={this.settingsDrawerHandler}
+                    visible={this.state.showHideSettings}
+                >
+                    <section className="drawer-settings__wrap">
+                        <Button onClick={this.showDeleteConfirm} type="dashed">Erase Database</Button>
+                    </section>
+                </Drawer>
             </Layout>
         );
     }

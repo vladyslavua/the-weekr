@@ -13,7 +13,7 @@ class Header extends Component {
                     <button className="footer-ext-icon button-no-decoration"><Icon type="medium" /></button>
                     <button className="footer-ext-icon button-no-decoration"><Icon type="twitter" /></button>
                     <span className="footer__divider">|</span>
-                    <button className="footer__about button-no-decoration">About <Icon className="footer__icon-up" type="up" /></button>
+                    <button onClick={this.props.landingBottomHandler} className="footer__about button-no-decoration">About <Icon className="footer__icon-up" type="up" /></button>
                 </span>
             </footer>
         );
