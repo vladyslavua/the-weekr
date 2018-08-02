@@ -1,6 +1,6 @@
 .all-tasks-wrap {
   width: calc(100% - 650px);
-  height: calc(100vh - 40px);
+  height: 100vh;
   display: inline-block;
   background: #fff;
   border-right: 1px solid #e0e0e0;
@@ -90,3 +90,7 @@
   text-align: center;
   color: lightgrey;
   font-weight: 300; }
+
+@media screen and (max-width: 400px) {
+  .all-tasks__part-header {
+    display: none; } }

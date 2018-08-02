@@ -54,7 +54,7 @@ class AllTasks extends Component {
             <section className="all-tasks-wrap">
                 <header className="all-tasks__header">
                     <img src="/logo.png" alt="The Weekr Logo" />
-                    <h3>All Tasks</h3>
+                    <h3><span className="all-tasks__part-header">All </span>Tasks</h3>
                     <button title="Settings" onClick={this.props.settingsDrawerHandler} className="button-no-decoration all-tasks__settings"><Icon type="setting" /></button>
                 </header>
                 <form onSubmit={this.handleSubmit} className="all-tasks__input-wrap">

@@ -3,12 +3,14 @@
   border-bottom: 1px solid lightgray;
   line-height: 35px;
   text-align: center;
-  position: relative; }
-  .day-column__section.day-column__section--active:hover .day-column__init-icon--minus {
+  position: relative;
+  display: block;
+  width: 100%; }
+  .day-column__section.day-column__section--active:hover .day-column__init-icon--minus, .day-column__section.day-column__section--active:active .day-column__init-icon--minus {
     display: inline-block; }
-  .day-column__section.day-column__section--active:hover .day-column__init-icon--plus {
+  .day-column__section.day-column__section--active:hover .day-column__init-icon--plus, .day-column__section.day-column__section--active:active .day-column__init-icon--plus {
     display: none; }
-  .day-column__section:hover .day-column__init-icon--plus {
+  .day-column__section:hover .day-column__init-icon--plus, .day-column__section:active .day-column__init-icon--plus {
     display: inline-block; }
 
 .day-column__init-icon {

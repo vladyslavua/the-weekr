@@ -6,8 +6,10 @@
   line-height: 35px;
   text-align: center;
   position: relative;
+  display: block;
+  width: 100%;
   &.day-column__section--active {
-    &:hover {
+    &:hover, &:active {
       .day-column__init-icon--minus {
         display: inline-block;
       }
@@ -16,7 +18,7 @@
       }
     }
   }
-  &:hover {
+  &:hover, &:active {
     .day-column__init-icon--plus {
       display: inline-block;
     }
