@@ -38,7 +38,7 @@ class AllTasks extends Component {
         });
         let archivedItems = this.props.archivedList.slice(0).reverse().map((item) => {
             return (
-                <SingleTask item={item} deleteItem={this.props.deleteItem} starHandler={this.props.todoStarHandler} key={item.id} archived={true} unarchive={this.props.unarchive} />
+                <SingleTask item={item} deleteItem={this.props.deleteItem} starHandler={this.props.todoStarHandler} key={item.id} archived={true} unarchive={this.props.unarchive} updateItem={this.props.updateItem} />
             );
         });
         if (!archivedItems.length) {

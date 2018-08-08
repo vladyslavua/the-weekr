@@ -34,13 +34,16 @@
   display: none;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 1px;
 }
 
 .single-task-subtasks__item {
   position: relative;
-  &:hover {
+  &:hover, &:active, &.single-task-subtasks__item--active {
     .single-task-subtasks__delete-subtask {
+      display: inline-block;
+    }
+    .single-task-subtasks__star-icon {
       display: inline-block;
     }
   }
@@ -52,6 +55,20 @@
 
 .single-task-subtasks__text {
   display: inline-block;
-  width: calc(100% - 20px);
+  width: calc(100% - 40px);
   margin-top: 1px;
+}
+
+.single-task-subtasks__star-icon {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 1px;
+  color: lightgrey;
+  &.single-task-subtasks__star-icon--active {
+    display: inline-block;
+  }
+  &:hover {
+    color: gray;
+  }
 }

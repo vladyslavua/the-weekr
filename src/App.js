@@ -64,9 +64,19 @@ class App extends Component {
             .update(id, { done })
             .then(() => {
                 const index = this.state.todos.map((e) => e.id).indexOf(id);
-                const newList = this.state.todos.map((item) => Object.assign({}, item));
-                newList[index].done = done;
-                this.setState({ todos: newList });
+                if (index >= 0) {
+                    const newList = this.state.todos.map((item) => Object.assign({}, item));
+                    newList[index].done = done;
+                    this.setState({ todos: newList });
+                } else {
+                    const index = this.state.archived.map((e) => e.id).indexOf(id);
+                    if (index >= 0) {
+                        const newList = this.state.archived.map((item) => Object.assign({}, item));
+                        newList[index].done = done;
+                        this.setState({archived: newList});
+                    }
+                }
+
             })
             .catch(() => {
                 notification.open({
@@ -211,11 +221,20 @@ class App extends Component {
                     this.landingBottomHandler();
                     indexedDB.table('user')
                         .add({seenLanding: true})
-                        .then(() => {})
+                        .then(() => {
+                            this.addInitData();
+                        })
                 } else {
 
                 }
-            })
+            });
+    }
+    addInitData() {
+        this.addItem('Please use recent browsers to keep data constantly saved. Do not use incognito mode. All data stored locally.');
+        this.addItem('Keep global repetitive tasks in this list.');
+        this.addItem('Click on item to add more specific sub-tasks.');
+        this.addItem('Click on graph button on the top to compare your week-to-week performance.');
+        this.addItem('Use week table to assign tasks from the list for each day of the week.');
     }
     statsBottomHandler() {
         this.bottomSlider.current.landingBottomHandler(() => {

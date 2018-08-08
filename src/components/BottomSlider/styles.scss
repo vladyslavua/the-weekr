@@ -6,7 +6,7 @@
   width: 100%;
   background: #fff;
   position: fixed;
-  bottom: 0;
+  bottom: 40px;
   animation: bottomAppearance 0.5s;
   //border-top: 1px solid lightgray;
   box-shadow: 0px 0px 4px -4px rgba(0, 0, 0, 0.1), 0px -2px 17px 0 rgba(0, 0, 0, 0.1);
@@ -14,7 +14,7 @@
 
 @keyframes bottomAppearance{
   from {bottom: -260px;}
-  to {bottom: 0;}
+  to {bottom: 40px;}
 }
 
 .slow-hide-active {
@@ -23,7 +23,7 @@
 }
 
 @keyframes bottomHide{
-  from {bottom: 0;}
+  from {bottom: 40px;}
   to {bottom: -260px;}
 }
 

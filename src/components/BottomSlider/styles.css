@@ -3,7 +3,7 @@
   width: 100%;
   background: #fff;
   position: fixed;
-  bottom: 0;
+  bottom: 40px;
   animation: bottomAppearance 0.5s;
   box-shadow: 0px 0px 4px -4px rgba(0, 0, 0, 0.1), 0px -2px 17px 0 rgba(0, 0, 0, 0.1); }
 
@@ -11,7 +11,7 @@
   from {
     bottom: -260px; }
   to {
-    bottom: 0; } }
+    bottom: 40px; } }
 
 .slow-hide-active {
   animation: bottomHide 0.5s;
@@ -19,7 +19,7 @@
 
 @keyframes bottomHide {
   from {
-    bottom: 0; }
+    bottom: 40px; }
   to {
     bottom: -260px; } }
 

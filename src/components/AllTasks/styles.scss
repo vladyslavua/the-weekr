@@ -1,9 +1,6 @@
 @import '../../variables';
 
 .all-tasks-wrap {
-  //order: 1;
-  //flex: 1 1 auto;
-  //align-self: stretch;
   width: calc(100% - #{$weektable-width});
   @media screen and (max-width: 1050px) {
     width: calc(100% - #{$weektable-width-small});
@@ -14,17 +11,11 @@
   @media screen and (max-width: 600px) {
     width: calc(100% - #{$weektable-width-small-one});
   }
-  height: 100vh;
+  min-height: 100vh;
   display: inline-block;
   background: #fff;
   border-right: 1px solid #e0e0e0;
-  overflow-y: scroll;
-  //@media screen and (max-width: 920px) {
-  //  flex: 0 1 300px;
-  //}
-  //@media screen and (min-width: 921px) {
-  //  flex: 0 1 400px;
-  //}
+  //overflow-y: scroll;
 }
 
 .all-tasks__list {

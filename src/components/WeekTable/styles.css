@@ -1,7 +1,7 @@
 .week-table-wrap {
   width: 650px;
   display: inline-block;
-  height: 100vh;
+  min-height: 100vh;
   background: #ff8d57; }
   @media screen and (max-width: 1050px) {
     .week-table-wrap {

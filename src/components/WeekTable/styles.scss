@@ -6,7 +6,7 @@
   //align-self: stretch;
   width: $weektable-width;
   display: inline-block;
-  height: 100vh;
+  min-height: 100vh;
   background: $color-prime;
   @media screen and (max-width: 1050px) {
     width: $weektable-width-small;

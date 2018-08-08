@@ -1,10 +1,9 @@
 .all-tasks-wrap {
   width: calc(100% - 650px);
-  height: 100vh;
+  min-height: 100vh;
   display: inline-block;
   background: #fff;
-  border-right: 1px solid #e0e0e0;
-  overflow-y: scroll; }
+  border-right: 1px solid #e0e0e0; }
   @media screen and (max-width: 1050px) {
     .all-tasks-wrap {
       width: calc(100% - 450px); } }

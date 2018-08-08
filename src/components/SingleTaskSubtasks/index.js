@@ -95,13 +95,38 @@ class SingleTaskSubtasks extends Component {
 	handleSubtaskInput(event) {
 		this.setState({inputSubtask: event.target.value});
 	}
-
+	starHandler(index, item) {
+		let val = false;
+		if (!item.starred) {
+			// this.props.starHandler(this.props.item.id, true);
+			val = true;
+		}
+		indexedDB.table('subtasks')
+			.update(item.id, { starred: val })
+			.then(() => {
+				const newList = this.state.subtasks.map((item) => Object.assign({}, item));
+				newList[index].starred = val;
+				this.setState({ subtasks: newList });
+			})
+			.catch(() => {
+				notification.open({
+					message: 'Error',
+					description: 'Something went wrong. Please refresh the browser.',
+				});
+			});
+	}
 	render() {
 		const subtasks = this.state.subtasks.map((item, index) => {
+			let starIcon = (<button title="Star item" className="button-no-decoration single-task-subtasks__star-icon" onClick={() => {this.starHandler(index, item)}}><Icon type="star-o" /></button>);
+			if (item.starred) {
+				starIcon = (<button title="Remove star from item" onClick={() => {this.starHandler(index, item)}} className="button-no-decoration single-task-subtasks__star-icon single-task-subtasks__star-icon--active"><Icon type="star" /></button>);
+			}
+			let clicked = false;
 			return (
-				<li key={item.id} className="single-task-subtasks__item">
+				<li onClick={() => {clicked ? clicked = false : clicked = true}} key={item.id} className={"single-task-subtasks__item " + (clicked ? 'single-task-subtasks__item--active' : '')}>
 					<Checkbox onChange={() => this.onChangeSubtaskCheckbox(index, item.id)} checked={item.done} />
 					<span className="single-task-subtasks__text">{item.text}</span>
+					{starIcon}
 					<button onClick={() => this.deleteSubtask(item.id)} className="button-no-decoration single-task-subtasks__delete-subtask"><Icon type="close" /></button>
 				</li>
 			);
