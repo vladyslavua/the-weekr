@@ -301,7 +301,7 @@ class App extends Component {
     }
     submitEmail(event) {
         event.preventDefault();
-        fetch('/emails', {
+        fetch('/email', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
