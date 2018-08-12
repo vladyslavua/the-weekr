@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
 
-import { Layout, notification, Drawer, Button, Modal, message } from 'antd';
+import { Layout, notification, Drawer, Button, Modal, message, Input } from 'antd';
 import indexedDB from './indexedDB';
 
 import Header from './components/Header/index';
@@ -18,7 +18,7 @@ const confirm = Modal.confirm;
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { todos: [], archived: [], statsBottom: false, landingBottom: false, weekItems: [], slowHideBottom: false, showHideSettings: false };
+        this.state = { todos: [], archived: [], statsBottom: false, landingBottom: false, weekItems: [], slowHideBottom: false, showHideSettings: false, showModal: false, emailState: '' };
         this.bottomSlider = React.createRef();
         this.addItem = this.addItem.bind(this);
         this.updateItem = this.updateItem.bind(this);
@@ -34,6 +34,10 @@ class App extends Component {
         this.landingBottomHandler = this.landingBottomHandler.bind(this);
         this.onCloseBottomSlider = this.onCloseBottomSlider.bind(this);
         this.showDeleteConfirm = this.showDeleteConfirm.bind(this);
+        this.handleModalOpen = this.handleModalOpen.bind(this);
+        this.handleModalCancel = this.handleModalCancel.bind(this);
+        this.submitEmail = this.submitEmail.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
     };
     hoverTodo(id) {
         this.foo.todoHover(id);
@@ -289,10 +293,37 @@ class App extends Component {
             },
         });
     }
+    handleModalCancel() {
+        this.setState({ showModal: false });
+    }
+    handleModalOpen() {
+        this.setState({ showModal: true });
+    }
+    submitEmail(event) {
+        event.preventDefault();
+        fetch('/emails', {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                "email": this.state.emailState
+            })
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    message.success('Your email has been successfully submitted. Nice one.');
+                } else {
+                    message.error('Something went wrong. Email was not submitted. Please contact support if it appears again.');
+                }
+                this.handleModalCancel();
+            });
+    }
+    handleEmailChange(event) {
+        this.setState({emailState: event.target.value});
+    }
     render() {
         return (
             <Layout>
-                <Header landingBottomHandler={this.landingBottomHandler} />
+                <Header featureModal={this.handleModalOpen} landingBottomHandler={this.landingBottomHandler} />
                 <Content className="content-wrap content-wrap--flex-container">
                     <AllTasks todoStarHandler={this.todoStarHandler} hoverTodo={this.hoverTodo} addItem={this.addItem} updateItem={this.updateItem} deleteItem={this.deleteItem} todoList={this.state.todos} archivedList={this.state.archived} editItem={this.editItem} archiveItem={this.archiveItem} unarchive={this.unarchiveItem} settingsDrawerHandler={this.settingsDrawerHandler} />
                     <WeekTable ref={foo => this.foo = foo} todoList={this.state.todos} statsBottomHandler={this.statsBottomHandler} />
@@ -309,9 +340,26 @@ class App extends Component {
                     visible={this.state.showHideSettings}
                 >
                     <section className="drawer-settings__wrap">
-                        <Button onClick={this.showDeleteConfirm} type="dashed">Erase Database</Button>
+                        <Button className="drawer-settings__login-brn drawer-settings__login-brn--signup" type="primary" onClick={this.handleModalOpen}>Sign Up</Button>
+                        <Button className="drawer-settings__login-brn drawer-settings__login-brn--signin" type="default" onClick={this.handleModalOpen}>Sign In</Button>
+                        <span className="drawer-settings__registration-text">* Registration allows cross-platform data synchronisation</span>
+                        <Button className="drawer-settings__erase-brn" onClick={this.showDeleteConfirm} type="dashed">Erase Local Database</Button>
                     </section>
                 </Drawer>
+                <Modal
+                    visible={this.state.showModal}
+                    title="Feature is under development"
+                    onOk={this.handleModalCancel}
+                    onCancel={this.handleModalCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleModalCancel}>Return</Button>,
+                    ]}
+                >
+                    This feature is under development. Please leave your email for latest updates.
+                    <form className="modal-feature__form" onSubmit={this.submitEmail}>
+                        <Input value={ this.state.emailState } onChange={ this.handleEmailChange } className="modal-feature__email" placeholder="Your email" addonAfter={<button type="submit">Submit</button>} />
+                    </form>
+                </Modal>
             </Layout>
         );
     }

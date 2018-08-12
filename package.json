@@ -1,6 +1,6 @@
 {
   "name": "the-weekr",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "dependencies": {
     "antd": "^3.7.3",

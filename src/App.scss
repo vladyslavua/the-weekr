@@ -80,3 +80,34 @@ h1, h2, h3, h4, h5 {
 .ant-layout {
   background: #ffffff!important;
 }
+
+.drawer-settings__wrap {
+  position: relative;
+  height: calc(100vh - 100px);
+}
+
+.drawer-settings__erase-brn {
+  position: absolute !important;
+  bottom: 10px;
+  left: 0;
+  margin: 0 auto;
+  width: 205px;
+}
+
+.drawer-settings__login-brn {
+  width: 205px;
+  margin-bottom: 20px;
+}
+
+.drawer-settings__registration-text {
+  color: #a7a5a5;
+  font-weight: 300;
+  font-size: 12px;
+  text-align: left;
+  display: block;
+  margin: 0 3px;
+}
+
+.modal-feature__form {
+  margin-top: 10px;
+}

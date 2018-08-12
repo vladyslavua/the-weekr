@@ -22,6 +22,8 @@
 
 .footer__divider {
   margin: 0 15px; }
+  .footer__divider.footer__divider--no-mar-l {
+    margin-right: 0; }
 
 .footer__about:hover {
   color: #ff4b4b; }
