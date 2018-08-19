@@ -231,6 +231,9 @@ class App extends Component {
                 } else {
 
                 }
+            })
+            .catch(() => {
+                this.landingBottomHandler();
             });
     }
     addInitData() {
