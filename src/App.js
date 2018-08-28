@@ -237,11 +237,8 @@ class App extends Component {
             });
     }
     addInitData() {
-        this.addItem('Please use recent browsers to keep data constantly saved. Do not use incognito mode. All data stored locally.');
-        this.addItem('Keep global repetitive tasks in this list.');
-        this.addItem('Click on item to add more specific sub-tasks.');
-        this.addItem('Click on graph button on the top to compare your week-to-week performance.');
-        this.addItem('Use week table to assign tasks from the list for each day of the week.');
+        this.addItem('Click on graph button on the top to compare your week-to-week performance. Use week table to assign tasks from the list for each day of the week.');
+        this.addItem('Click to expand the card for editing an item, archiving or adding sub-tasks to it.');
     }
     statsBottomHandler() {
         this.bottomSlider.current.landingBottomHandler(() => {

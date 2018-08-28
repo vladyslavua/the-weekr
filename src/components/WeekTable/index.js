@@ -55,11 +55,8 @@ class WeekTable extends Component {
             .then((user) => {
                 if (user.length === 0) {
                     this.addItem(this.state.dayStartWeek, 1);
-                    this.addItem(this.state.dayStartWeek+1, 3);
+                    this.addItem(this.state.dayStartWeek+1, 2);
                     this.addItem(this.state.dayStartWeek+2, 1);
-                    this.addItem(this.state.dayStartWeek+3, 3);
-                    this.addItem(this.state.dayStartWeek+3, 5);
-                    this.addItem(this.state.dayStartWeek+6, 4);
                 } else {
 
                 }
