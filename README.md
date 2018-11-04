@@ -4,3 +4,5 @@ This webapp uses IndexedDB, which is internal browser storage, therefore synchro
 
 To access public beta, please go to https://theweekr.com
 
+To build prod, use command `npm run build --nomaps`
+

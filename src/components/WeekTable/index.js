@@ -9,7 +9,7 @@ import { notification, Icon } from 'antd';
 class WeekTable extends Component {
     constructor(props) {
         super(props);
-        this.state = {dayStartWeek: null, items: [], dataLoaded: false, dayOfWeek: null, week: null, currentDay: null, currentWeek: null, hoverId: null, hiddenColumns: [false, false, false, false, false, false, false], navLeft: false, navRight: false, smallScreenActiveDay: null};
+        this.state = {dayStartWeek: null, items: [], dataLoaded: false, dayOfWeek: null, week: null, currentDay: null, currentWeek: null, hoverId: null, hiddenColumns: [false, false, false, false, false, false, false], navLeft: false, navRight: false, smallScreenActiveDay: null, activeYear: null};
         this.getItemForSpecificDay = this.getItemForSpecificDay.bind(this);
         this.addItem = this.addItem.bind(this);
         this.handleTick = this.handleTick.bind(this);
@@ -25,11 +25,14 @@ class WeekTable extends Component {
             placement: 'bottomLeft',
         });
         const now = new Date();
+        this.setState({activeYear: now.getFullYear()});
+        const nowFixedYear = new Date();
+        nowFixedYear.setFullYear(2018);
         const week = this.getWeekNumber(new Date());
         this.setState({week: week});
         //current week - not changed
         this.setState({currentWeek: week});
-        const start = new Date(now.getFullYear(), 0, 0);
+        const start = new Date(nowFixedYear.getFullYear(), 0, 0);
         const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
         const oneDay = 1000 * 60 * 60 * 24;
         let dayofweek = now.getDay();
@@ -78,8 +81,17 @@ class WeekTable extends Component {
             let newState = [true, true, true, true, true, true, true];
             newState[this.state.dayOfWeek - 1] = false;
             this.setState({hiddenColumns: newState});
-            this.setState({navLeft: true});
-            this.setState({navRight: true});
+            if (this.state.dayOfWeek === 1) {
+                this.setState({navLeft: false});
+            } else {
+                this.setState({navLeft: true});
+            }
+            if (this.state.dayOfWeek === 7) {
+                this.setState({navRight: false});
+            } else {
+                this.setState({navRight: true});
+            }
+
             return;
         }
         if (windowWidth < 800) {
@@ -155,8 +167,9 @@ class WeekTable extends Component {
             .where('day').inAnyRange([[startDay, endDay]])
             .toArray()
             .then((items) => {
-                this.setState({items: items});
-                this.setState({dataLoaded: true});
+                this.setState({items: items}, () => {
+                    this.setState({dataLoaded: true});
+                });
             })
             .catch(() => {
                 notification.open({
@@ -228,10 +241,21 @@ class WeekTable extends Component {
             });
     }
     weekBefore() {
+        var activeYear = this.state.activeYear;
+        if (this.state.week === 1) {
+            activeYear--;
+            this.setState({activeYear: this.state.activeYear - 1});
+        }
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        var newWeek = this.state.week - 1;
+        if (newWeek === 0) {
+            newWeek = 52;
+        }
         this.setState((prevState, props) => ({
-            week: prevState.week - 1
+            week: newWeek
         }), () => {
-            if (this.state.currentWeek === this.state.week) {
+            if (this.state.currentWeek === this.state.week && activeYear === currentYear) {
                 this.setState({dayOfWeek: this.state.currentDay});
             }
         });
@@ -243,10 +267,21 @@ class WeekTable extends Component {
         this.setState({dayOfWeek: null});
     }
     weekAfter() {
+        var activeYear = this.state.activeYear;
+        if (this.state.week === 52) {
+            activeYear++;
+            this.setState({activeYear: this.state.activeYear + 1});
+        }
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        var newWeek = this.state.week + 1;
+        if (newWeek === 53) {
+            newWeek = 1;
+        }
         this.setState((prevState, props) => ({
-            week: prevState.week + 1
+            week: newWeek
         }), () => {
-            if (this.state.currentWeek === this.state.week) {
+            if (this.state.currentWeek === this.state.week && activeYear === currentYear) {
                 this.setState({dayOfWeek: this.state.currentDay});
             }
         });
@@ -265,6 +300,7 @@ class WeekTable extends Component {
             return (
                 <div className="week-table-wrap">
                     <header className="week-table__header">
+                        <div className="week-table__year-head">{this.state.activeYear}</div>
                         <span className="week-table__navigation">
                             <button onClick={this.goHome} className="button-no-decoration"><Icon type="home" /></button>
                             <button onClick={this.statsBottomHandler} className="button-no-decoration"><Icon type="line-chart" /></button>

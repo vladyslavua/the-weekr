@@ -81,12 +81,13 @@
   display: block;
   width: 100px;
   margin: 0 auto;
-  top: 0;
+  top: -5px;
   text-transform: uppercase;
   @media screen and (max-width: 600px) {
     font-size: 12px;
-    width: 83px;
+    width: 85px;
   }
+  text-align: center;
 }
 
 .week-table__stats {
@@ -112,4 +113,16 @@
   position: absolute;
   left: 5px;
   top: 15px;
+}
+
+.week-table__year-head {
+  position: absolute;
+  top: 11px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-weight: 800;
+  font-size: 9px;
+  letter-spacing: -1px;
+  height: 0;
 }

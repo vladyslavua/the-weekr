@@ -9,10 +9,11 @@ import { LineChart, Line, XAxis, CartesianGrid, ResponsiveContainer, YAxis } fro
 class StatsBottom extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {data: []};
+		this.state = {data: [], currentYear: null};
 		// this.getItemForSpecificDay = this.getItemForSpecificDay.bind(this);
 	}
 	componentDidMount() {
+		this.setState({currentYear: new Date().getFullYear()});
 		this.getItems();
 	}
 	getItems() {
@@ -35,16 +36,19 @@ class StatsBottom extends Component {
 		}
 		for (let i = 0; i < items.length; i++) {
 			const firstJan = new Date((new Date()).getFullYear(), 0, 0);
-			const week = this.getWeekNumber(new Date(firstJan.setDate(firstJan.getDate() + items[i].day)));
-			let doneNum = data[week].done;
-			let activeNum = data[week].active + 1;
-			if (items[i].done) {
-				doneNum++;
-			}
-			data[week] = {
-				week: week,
-				done: doneNum,
-				active: activeNum
+			var taskDate = new Date(firstJan.setDate(firstJan.getDate() + items[i].day));
+			if (taskDate.getFullYear() === new Date().getFullYear()) {
+				const week = this.getWeekNumber(taskDate);
+				let doneNum = data[week].done;
+				let activeNum = data[week].active + 1;
+				if (items[i].done) {
+					doneNum++;
+				}
+				data[week] = {
+					week: week,
+					done: doneNum,
+					active: activeNum
+				};
 			}
 		}
 		let finalData = [];
@@ -57,8 +61,15 @@ class StatsBottom extends Component {
 				});
 			}
 		}
+		//num of elements to show
+		const NUMBER_OF_ELEMENTS = 10;
+		if (finalData.length > NUMBER_OF_ELEMENTS) {
+			var firstEl = finalData.length - NUMBER_OF_ELEMENTS;
+			var lastEl = finalData.length;
+			finalData = finalData.slice(firstEl, lastEl)
+		}
 		this.setState({data: finalData}, () => {
-			console.log(this.state.data);
+			// console.log(this.state.data);
 		});
 	}
 	getWeekNumber(d) {
@@ -82,6 +93,7 @@ class StatsBottom extends Component {
 				</ResponsiveContainer>
 				<div className="stats-bottom__x-axis-legend">Weeks</div>
 				<div className="stats-bottom__y-axis-legend">Completion Rate</div>
+				<div className="stats-bottom__info">This chart shows task completion rate for last 10 active weeks in year {this.state.currentYear}</div>
 			</section>
 		);
 	}
