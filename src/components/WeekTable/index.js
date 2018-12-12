@@ -58,7 +58,7 @@ class WeekTable extends Component {
         indexedDB.table('user')
             .toArray()
             .then((user) => {
-                if (user.length === 0) {
+                if (user.length === 0 && !this.props.authorised) {
                     this.addItem(this.state.dayStartWeek, 1);
                     this.addItem(this.state.dayStartWeek+1, 2);
                     this.addItem(this.state.dayStartWeek+2, 1);
@@ -211,9 +211,9 @@ class WeekTable extends Component {
         return this.state.items.filter((value) => value.day === day);
     }
     addItem(day, taskId) {
-        if (this.state.items.some((value) => value.day === day && value.taskId === taskId)) {
+        if (this.state.items.some((value) => value.day === day && (value.taskId + '') === (taskId + ''))) {
             let newArray = [...this.state.items];
-            let singleItem = newArray.filter((item) => item.taskId === taskId && item.day === day);
+            let singleItem = newArray.filter((item) => ((item.taskId + '') === (taskId + '')) && item.day === day);
             if (this.props.authorised) {
                 app.database().ref('users/' + this.props.authorised + '/days/' + singleItem[0].id).remove();
             } else {
