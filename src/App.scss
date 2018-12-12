@@ -31,6 +31,7 @@
 
 .content-wrap {
   min-height: calc(100vh - #{$header-height});
+  margin-bottom: 40px;
 }
 .content-wrap--flex-container {
   display: flex;
@@ -64,7 +65,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .hidden {
-  display: none;
+  display: none!important;
 }
 
 .drawer-settings__wrap {
@@ -90,6 +91,7 @@ h1, h2, h3, h4, h5 {
   position: absolute !important;
   bottom: 10px;
   left: 0;
+  right: 0;
   margin: 0 auto;
   width: 205px;
 }
@@ -100,12 +102,16 @@ h1, h2, h3, h4, h5 {
 }
 
 .drawer-settings__registration-text {
-  color: #a7a5a5;
+  color: #808080;
   font-weight: 300;
-  font-size: 12px;
+  font-size: 11px;
   text-align: left;
   display: block;
   margin: 0 3px;
+  padding: 0 21px;
+  p {
+    margin-bottom: 5px;
+  }
 }
 
 .modal-feature__form {
@@ -115,4 +121,17 @@ h1, h2, h3, h4, h5 {
 ._hj-f5b2a1eb-9b07_widget {
   z-index: 10 !important;
   left: 7px!important;
+}
+
+.ant-drawer-body {
+  padding-left: 0!important;
+  padding-right: 0!important;
+}
+
+.firebaseui-idp-list {
+  margin-top: 0!important;
+}
+
+.transfer-modal__extratext {
+  font-size: 11px;
 }

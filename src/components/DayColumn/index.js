@@ -42,7 +42,7 @@ class DayColumn extends Component {
     // }
     render() {
         const items = this.props.todoList.slice(0).reverse().map((item) => {
-            const selectedDayTaskArray = this.props.items.filter((value) => value.taskId === item.id);
+            const selectedDayTaskArray = this.props.items.filter((value) => (value.taskId + '') === (item.id + ''));
             let selectedDayTask = null;
             if (selectedDayTaskArray.length > 0) {
                 selectedDayTask = selectedDayTaskArray[0];

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './styles.css';
 
 import indexedDB from '../../indexedDB';
+import app from 'firebase/app';
 import { notification } from 'antd';
 
 import { LineChart, Line, XAxis, CartesianGrid, ResponsiveContainer, YAxis } from 'recharts';
@@ -17,17 +18,35 @@ class StatsBottom extends Component {
 		this.getItems();
 	}
 	getItems() {
-		indexedDB.table('days')
-			.toArray()
-			.then((items) => {
-				this.structureData(items);
-			})
-			.catch(() => {
-				notification.open({
-					message: 'Error',
-					description: 'Something went wrong. Please refresh the browser.',
+		if (this.props.authorised) {
+			let days = app.database().ref('users/' + this.props.authorised + '/days');
+			days.on('value', function(snapshot) {
+				let data = snapshot.val();
+				if (!data) {
+					return false;
+				}
+				let items = Object.entries(data).map(([key, value]) => {
+					let res = value;
+					if (res.id === undefined) {
+						res.id = key;
+					}
+					return res;
 				});
-			});
+				this.structureData(items);
+			}.bind(this));
+		} else {
+			indexedDB.table('days')
+				.toArray()
+				.then((items) => {
+					this.structureData(items);
+				})
+				.catch(() => {
+					notification.open({
+						message: 'Error',
+						description: 'Something went wrong. Please refresh the browser.',
+					});
+				});
+		}
 	}
 	structureData(items) {
 		let data = [];

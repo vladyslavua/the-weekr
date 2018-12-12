@@ -1,6 +1,6 @@
 .all-tasks-wrap {
   width: calc(100% - 650px);
-  min-height: 100vh;
+  min-height: calc(100vh + 41px);
   display: inline-block;
   background: #fff;
   border-right: 1px solid #e0e0e0; }
@@ -18,7 +18,8 @@
   list-style-type: none;
   padding: 0;
   margin-bottom: 0;
-  margin-top: 10px; }
+  margin-top: 10px;
+  margin-bottom: 10px; }
 
 .all-tasks__input-wrap {
   padding: 0 15px; }
@@ -93,3 +94,22 @@
 @media screen and (max-width: 400px) {
   .all-tasks__part-header {
     display: none; } }
+
+.all-tasks__settings__authorised {
+  font-size: 11px;
+  position: absolute;
+  right: 23px;
+  width: 86px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right; }
+  @media screen and (max-width: 700px) {
+    .all-tasks__settings__authorised {
+      display: none; } }
+
+.all-tasks__settings--authorised {
+  color: #00a900; }
+  .all-tasks__settings--authorised:hover {
+    color: #35d835 !important; }

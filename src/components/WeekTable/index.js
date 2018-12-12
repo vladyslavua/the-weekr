@@ -4,6 +4,8 @@ import './styles.css';
 import DayColumn from '../DayColumn/index';
 import indexedDB from '../../indexedDB';
 
+import app from 'firebase/app';
+
 import { notification, Icon } from 'antd';
 
 class WeekTable extends Component {
@@ -163,20 +165,47 @@ class WeekTable extends Component {
         this.setState({hoverId: id});
     }
     getItems(startDay, endDay) {
-        indexedDB.table('days')
-            .where('day').inAnyRange([[startDay, endDay]])
-            .toArray()
-            .then((items) => {
-                this.setState({items: items}, () => {
+        if (this.props.authorised) {
+            this.getItemsCloud(startDay, endDay);
+        } else {
+            indexedDB.table('days')
+                .where('day').inAnyRange([[startDay, endDay]])
+                .toArray()
+                .then((items) => {
+                    this.setState({items: items}, () => {
+                        this.setState({dataLoaded: true});
+                    });
+                })
+                .catch(() => {
+                    notification.open({
+                        message: 'Error',
+                        description: 'Something went wrong. Please refresh the browser.',
+                    });
+                });
+        }
+    }
+    getItemsCloud(startDay, endDay) {
+        let days = app.database().ref('users/' + this.props.authorised + '/days').orderByChild('day').startAt(startDay).endAt(endDay);
+        days.on('value', function(snapshot) {
+            let data = snapshot.val();
+            if (!data) {
+                this.setState({items: []}, () => {
                     this.setState({dataLoaded: true});
                 });
-            })
-            .catch(() => {
-                notification.open({
-                    message: 'Error',
-                    description: 'Something went wrong. Please refresh the browser.',
-                });
+                return false;
+            }
+            // let items = Object.values(data);
+            let items = Object.entries(data).map(([key, value]) => {
+                let res = value;
+                if (res.id === undefined) {
+                    res.id = key;
+                }
+                return res;
             });
+            this.setState({items: items}, () => {
+                this.setState({dataLoaded: true});
+            });
+        }.bind(this));
     }
     getItemForSpecificDay(day) {
         return this.state.items.filter((value) => value.day === day);
@@ -185,39 +214,48 @@ class WeekTable extends Component {
         if (this.state.items.some((value) => value.day === day && value.taskId === taskId)) {
             let newArray = [...this.state.items];
             let singleItem = newArray.filter((item) => item.taskId === taskId && item.day === day);
-            indexedDB.table('days')
-                .delete(singleItem[0].id)
-                .then(() => {
-                    newArray = newArray.filter(function(item) {
-                        return item.day !== day || item.taskId !== taskId;
+            if (this.props.authorised) {
+                app.database().ref('users/' + this.props.authorised + '/days/' + singleItem[0].id).remove();
+            } else {
+                indexedDB.table('days')
+                    .delete(singleItem[0].id)
+                    .then(() => {
+                        newArray = newArray.filter(function(item) {
+                            return item.day !== day || item.taskId !== taskId;
+                        });
+                        this.setState({items: newArray});
+                    })
+                    .catch(() => {
+                        notification.open({
+                            message: 'Error',
+                            description: 'Something went wrong. Please refresh the browser.',
+                        });
                     });
-                    this.setState({items: newArray});
-                })
-                .catch(() => {
-                    notification.open({
-                        message: 'Error',
-                        description: 'Something went wrong. Please refresh the browser.',
-                    });
-                });
+            }
         } else {
-            const item = {
+            let item = {
                 day: day,
                 taskId: taskId,
                 active: true,
                 done: false
             };
-            indexedDB.table('days')
-                .add(item)
-                .then((id) => {
-                    item.id = id;
-                    this.setState({items: [...this.state.items, item]});
-                })
-                .catch(() => {
-                    notification.open({
-                        message: 'Error',
-                        description: 'Something went wrong. Please refresh the browser.',
+            if (this.props.authorised) {
+                item.taskId = item.taskId + '';
+                app.database().ref('users/' + this.props.authorised + '/days/').push().set(item);
+            } else {
+                indexedDB.table('days')
+                    .add(item)
+                    .then((id) => {
+                        item.id = id;
+                        this.setState({items: [...this.state.items, item]});
+                    })
+                    .catch(() => {
+                        notification.open({
+                            message: 'Error',
+                            description: 'Something went wrong. Please refresh the browser.',
+                        });
                     });
-                });
+            }
         }
 
     }
@@ -229,16 +267,20 @@ class WeekTable extends Component {
         const newList = this.state.items.map((item) => Object.assign({}, item));
         newList[index].done = !newList[index].done;
         this.setState({ items: newList });
-        indexedDB.table('days')
-            .update(id, { done: newList[index].done })
-            .then(() => {
-            })
-            .catch(() => {
-                notification.open({
-                    message: 'Error',
-                    description: 'Something went wrong. Please refresh the browser.',
+        if (this.props.authorised) {
+            app.database().ref('users/' + this.props.authorised + '/days/' + id + '/done').set(newList[index].done);
+        } else {
+            indexedDB.table('days')
+                .update(id, { done: newList[index].done })
+                .then(() => {
+                })
+                .catch(() => {
+                    notification.open({
+                        message: 'Error',
+                        description: 'Something went wrong. Please refresh the browser.',
+                    });
                 });
-            });
+        }
     }
     weekBefore() {
         var activeYear = this.state.activeYear;
@@ -302,8 +344,8 @@ class WeekTable extends Component {
                     <header className="week-table__header">
                         <div className="week-table__year-head">{this.state.activeYear}</div>
                         <span className="week-table__navigation">
-                            <button onClick={this.goHome} className="button-no-decoration"><Icon type="home" /></button>
-                            <button onClick={this.statsBottomHandler} className="button-no-decoration"><Icon type="line-chart" /></button>
+                            <button title="Go to current week" onClick={this.goHome} className="button-no-decoration"><Icon type="home" /></button>
+                            <button title="Show/hide chart" onClick={this.statsBottomHandler} className="button-no-decoration"><Icon type="line-chart" /></button>
                             <span className="week-table__stats"><span className="week-table__stats__text"> Progress: </span>{this.calculateCompleted().length} / {this.state.items.length}</span>
                         </span>
                         <span className="week-table__heading">

@@ -1,5 +1,5 @@
 .day-column-wrap {
-  min-height: calc(100vh - 40px);
+  min-height: calc(100vh + 25px);
   order: 0;
   flex: 1 1 auto;
   align-self: stretch;

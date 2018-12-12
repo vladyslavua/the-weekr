@@ -67,8 +67,59 @@
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-N2Z647N');</script>
     <!-- End Google Tag Manager -->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script>
+      window.addEventListener("load", function(){
+        window.cookieconsent.initialise({
+          "palette": {
+            "popup": {
+              "background": "#333333",
+              "text": "#ffffff"
+            },
+            "button": {
+              "background": "#ffffff",
+              "text": "#333333"
+            }
+          },
+          "position": "top",
+          "static": true,
+          "content": {
+            "href": "https://www.freeprivacypolicy.com/privacy/view/8b5f69ef57992f71ec5e5d358d8a315a"
+          }
+        })});
+    </script>
   </head>
   <body>
+  <!--FB app-->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '201040317444140',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v3.2'
+      });
+
+      FB.AppEvents.logPageView();
+
+    };
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!--&lt;!&ndash;Firebase&ndash;&gt;-->
+  <!--<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>-->
+  <!--&lt;!&ndash; Firebase App is always required and must be first &ndash;&gt;-->
+  <!--<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-app.js"></script>-->
+  <!--&lt;!&ndash; Add additional services that you want to use &ndash;&gt;-->
+  <!--<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-auth.js"></script>-->
+  <!--<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-database.js"></script>-->
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N2Z647N"
                     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

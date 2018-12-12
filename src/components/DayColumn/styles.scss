@@ -2,7 +2,7 @@
 
 .day-column-wrap {
   //width: 33%;
-  min-height: calc(100vh - #{$header-height});
+  min-height: calc(100vh + 25px);
   //background: lightblue;
   //display: inline-block;
   order: 0;

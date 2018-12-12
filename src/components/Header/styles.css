@@ -34,3 +34,12 @@
 
 .footer__icon-up {
   font-size: 10px; }
+
+.footer__pp {
+  margin-right: 10px;
+  color: inherit; }
+  .footer__pp:hover {
+    color: #ff4b4b; }
+  @media screen and (max-width: 460px) {
+    .footer__pp {
+      display: none; } }

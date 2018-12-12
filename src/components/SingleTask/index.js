@@ -141,7 +141,7 @@ class SingleTask extends Component {
                 {/*<Button onClick={() => this.props.archiveItem(this.props.item.id)} className="single-task-list__extras__button" type="danger">Archive</Button><Button className="single-task-list__extras__button" onClick={this.editModeHandler}>Edit</Button>*/}
                 <button title="Archive item" onClick={() => this.props.archiveItem(this.props.item.id)} className="button-no-decoration single-task-list__extra-buttons single-task-list__extra-buttons--two"><Icon type="inbox" /></button>
                 <button title="Edit text" onClick={this.editModeHandler} className="button-no-decoration single-task-list__extra-buttons single-task-list__extra-buttons--one"><Icon type="edit" /></button>
-                {this.state.subtasksShow ? (<SingleTaskSubtasks taskId={this.props.item.id}/>) : ''}
+                {this.state.subtasksShow ? (<SingleTaskSubtasks authorised={this.props.authorised} taskId={this.props.item.id}/>) : ''}
             </div>
         );
         if (this.state.editMode) {
@@ -150,7 +150,7 @@ class SingleTask extends Component {
                     {/*<Button className="single-task-list__extras__button" onClick={this.saveEditedItem}>Save</Button><Button onClick={this.editModeHandler} className="single-task-list__extras__button">Cancel</Button>*/}
                     <button onClick={this.editModeHandler} className="button-no-decoration single-task-list__extra-buttons single-task-list__extra-buttons--two"><Icon type="minus" /></button>
                     <button onClick={this.saveEditedItem} className="button-no-decoration single-task-list__extra-buttons single-task-list__extra-buttons--one"><Icon type="save" /></button>
-                    {this.state.subtasksShow ? (<SingleTaskSubtasks taskId={this.props.item.id}/>) : ''}
+                    {this.state.subtasksShow ? (<SingleTaskSubtasks authorised={this.props.authorised} taskId={this.props.item.id}/>) : ''}
                 </div>
             )
         }

@@ -33,12 +33,12 @@ class AllTasks extends Component {
     render() {
         const items = this.props.todoList.slice(0).reverse().map((item) => {
             return (
-                <SingleTask hoverTodo={this.props.hoverTodo} item={item} starHandler={this.props.todoStarHandler} updateItem={this.props.updateItem} editItem={this.props.editItem} archiveItem={this.props.archiveItem} key={item.id} archived={false} />
+                <SingleTask authorised={this.props.authorised} hoverTodo={this.props.hoverTodo} item={item} starHandler={this.props.todoStarHandler} updateItem={this.props.updateItem} editItem={this.props.editItem} archiveItem={this.props.archiveItem} key={item.id} archived={false} />
             );
         });
         let archivedItems = this.props.archivedList.slice(0).reverse().map((item) => {
             return (
-                <SingleTask item={item} deleteItem={this.props.deleteItem} starHandler={this.props.todoStarHandler} key={item.id} archived={true} unarchive={this.props.unarchive} updateItem={this.props.updateItem} />
+                <SingleTask authorised={this.props.authorised} item={item} deleteItem={this.props.deleteItem} starHandler={this.props.todoStarHandler} key={item.id} archived={true} unarchive={this.props.unarchive} updateItem={this.props.updateItem} />
             );
         });
         if (!archivedItems.length) {
@@ -54,8 +54,8 @@ class AllTasks extends Component {
             <section className="all-tasks-wrap">
                 <header className="all-tasks__header">
                     <img src="/logo.png" alt="The Weekr Logo" />
-                    <h3><span className="all-tasks__part-header">All </span>Tasks</h3>
-                    <button title="Settings" onClick={this.props.settingsDrawerHandler} className="button-no-decoration all-tasks__settings"><Icon type="setting" /></button>
+                    <h3><span className="all-tasks__part-header">ALL</span> TASKS</h3>
+                    <button title="Settings" onClick={this.props.settingsDrawerHandler} className={"button-no-decoration all-tasks__settings" + (this.props.authorised ? ' all-tasks__settings--authorised' : '')}><span className="all-tasks__settings__authorised">{this.props.authorised ? this.props.authorisedName : 'Not Authorised'}</span><Icon type="login" /></button>
                 </header>
                 <form onSubmit={this.handleSubmit} className="all-tasks__input-wrap">
                     {/*<input value={this.state.todoItem} onChange={this.handleChange} />*/}

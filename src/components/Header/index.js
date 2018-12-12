@@ -17,6 +17,7 @@ class Header extends Component {
                     <a onClick={this.props.featureModal} className="footer-ext-icon button-no-decoration"><Icon className="footer-ext-icon--apple" type="apple" /></a>
                     <a onClick={this.props.featureModal} className="footer-ext-icon button-no-decoration"><Icon className="footer-ext-icon--android" type="android" /></a>
                     <span className="footer__divider">|</span>
+                    <a className="footer__pp" href="https://www.freeprivacypolicy.com/privacy/view/8b5f69ef57992f71ec5e5d358d8a315a" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
                     <button onClick={this.props.landingBottomHandler} className="footer__about button-no-decoration">About <Icon className="footer__icon-up" type="up" /></button>
                 </span>
             </footer>
